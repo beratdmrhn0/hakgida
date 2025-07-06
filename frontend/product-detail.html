@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı - Hakgida</title>
+    <meta name="description" content="Hakgida ürün detaylarını inceleyin. Kaliteli ve doğal ürünlerimizin özellikleri.">
+    <meta name="keywords" content="ürün detayı, çay, baklagil, baharat, organik, gıda, hakgida">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html">Hakgida</a></h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="products.html" class="nav-link">Ürünler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#about" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">İletişim</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb-list">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li id="breadcrumb-category"></li>
+                    <li id="breadcrumb-product" class="active"></li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-detail-content">
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="productImage" src="" alt="Ürün Resmi">
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="product-category" id="productCategory"></div>
+                    <h1 id="productName" class="product-title"></h1>
+                    <div class="product-stock" id="productStock"></div>
+                    <div class="product-price" id="productPrice"></div>
+                    <div class="product-description" id="productDescription"></div>
+                    
+                    <div class="product-features">
+                        <h3>Ürün Özellikleri</h3>
+                        <ul id="productFeatures"></ul>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="contactForProduct()">
+                            <i class="fas fa-phone"></i> Bilgi Al
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareProduct()">
+                            <i class="fas fa-share"></i> Paylaş
+                        </button>
+                        <button class="btn btn-outline" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i> Geri Dön
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products">
+        <div class="container">
+            <h2>Benzer Ürünler</h2>
+            <div class="related-products-grid" id="relatedProductsGrid">
+                <!-- Related products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hakgida</h3>
+                    <p>Doğal ve kaliteli ürünlerle sofralarınızı süslüyoruz. Çay üretiminden baharat ve baklagil ürünlerine kadar geniş bir yelpazede hizmet veriyoruz.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ürün Kategorileri</h3>
+                    <ul>
+                        <li><a href="products.html?category=caylar">Çaylar</a></li>
+                        <li><a href="products.html?category=baklagil">Baklagil</a></li>
+                        <li><a href="products.html?category=baharat">Baharat</a></li>
+                        <li><a href="products.html?category=organik">Organik Ürünler</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kurumsal</h3>
+                    <ul>
+                        <li><a href="index.html#about">Hakkımızda</a></li>
+                        <li><a href="index.html#contact">İletişim</a></li>
+                        <li><a href="products.html">Ürünlerimiz</a></li>
+                        <li><a href="#">Kalite Politikası</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Rize/Türkiye</p>
+                    <p><i class="fas fa-phone"></i> +90 464 123 45 67</p>
+                    <p><i class="fas fa-envelope"></i> info@hakgida.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hakgida. Tüm hakları saklıdır. | <a href="#">Gizlilik Politikası</a> | <a href="#">Kullanım Şartları</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="./assets/js/product-detail.js"></script>
+</body>
+</html> 

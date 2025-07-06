@@ -1,0 +1,281 @@
+// Products API Routes
+const express = require('express');
+const router = express.Router();
+const Product = require('../../models/Product');
+const { Op } = require('sequelize');
+
+// GET /api/products - Get all products
+router.get('/', async (req, res) => {
+    try {
+        const { category, search, sort, limit = 50, offset = 0 } = req.query;
+        
+        let whereClause = { isActive: true };
+        let orderClause = [['createdAt', 'DESC']];
+        
+        // Category filter
+        if (category && category !== 'all') {
+            whereClause.category = category;
+        }
+        
+        // Search filter
+        if (search) {
+            whereClause[Op.or] = [
+                { name: { [Op.iLike]: `%${search}%` } },
+                { description: { [Op.iLike]: `%${search}%` } }
+            ];
+        }
+        
+        // Sort options
+        if (sort) {
+            switch (sort) {
+                case 'price-low':
+                    orderClause = [['price', 'ASC']];
+                    break;
+                case 'price-high':
+                    orderClause = [['price', 'DESC']];
+                    break;
+                case 'name':
+                    orderClause = [['name', 'ASC']];
+                    break;
+                case 'newest':
+                    orderClause = [['createdAt', 'DESC']];
+                    break;
+                case 'oldest':
+                    orderClause = [['createdAt', 'ASC']];
+                    break;
+            }
+        }
+        
+        const products = await Product.findAll({
+            where: whereClause,
+            order: orderClause,
+            limit: parseInt(limit),
+            offset: parseInt(offset)
+        });
+        
+        const totalCount = await Product.count({ where: whereClause });
+        
+        res.json({
+            success: true,
+            data: products,
+            pagination: {
+                total: totalCount,
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                hasMore: totalCount > (parseInt(offset) + parseInt(limit))
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Ürünler getirilirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// GET /api/products/:id - Get single product
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const product = await Product.findOne({
+            where: { id, isActive: true }
+        });
+        
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                error: 'Ürün bulunamadı'
+            });
+        }
+        
+        res.json({
+            success: true,
+            data: product
+        });
+        
+    } catch (error) {
+        console.error('Error fetching product:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Ürün getirilirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// POST /api/products - Create new product
+router.post('/', async (req, res) => {
+    try {
+        const productData = req.body;
+        
+        // Validate required fields
+        const requiredFields = ['name', 'category', 'price', 'description'];
+        const missingFields = requiredFields.filter(field => !productData[field]);
+        
+        if (missingFields.length > 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Eksik alanlar',
+                missingFields
+            });
+        }
+        
+        const product = await Product.create(productData);
+        
+        res.status(201).json({
+            success: true,
+            data: product,
+            message: 'Ürün başarıyla oluşturuldu'
+        });
+        
+    } catch (error) {
+        console.error('Error creating product:', error);
+        
+        if (error.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                success: false,
+                error: 'Doğrulama hatası',
+                details: error.errors.map(e => ({
+                    field: e.path,
+                    message: e.message
+                }))
+            });
+        }
+        
+        res.status(500).json({
+            success: false,
+            error: 'Ürün oluşturulurken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// PUT /api/products/:id - Update product
+router.put('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        
+        const product = await Product.findByPk(id);
+        
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                error: 'Ürün bulunamadı'
+            });
+        }
+        
+        await product.update(updateData);
+        
+        res.json({
+            success: true,
+            data: product,
+            message: 'Ürün başarıyla güncellendi'
+        });
+        
+    } catch (error) {
+        console.error('Error updating product:', error);
+        
+        if (error.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                success: false,
+                error: 'Doğrulama hatası',
+                details: error.errors.map(e => ({
+                    field: e.path,
+                    message: e.message
+                }))
+            });
+        }
+        
+        res.status(500).json({
+            success: false,
+            error: 'Ürün güncellenirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// DELETE /api/products/:id - Delete product (soft delete)
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const product = await Product.findByPk(id);
+        
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                error: 'Ürün bulunamadı'
+            });
+        }
+        
+        // Soft delete - mark as inactive
+        await product.update({ isActive: false });
+        
+        res.json({
+            success: true,
+            message: 'Ürün başarıyla silindi'
+        });
+        
+    } catch (error) {
+        console.error('Error deleting product:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Ürün silinirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// GET /api/products/category/:category - Get products by category
+router.get('/category/:category', async (req, res) => {
+    try {
+        const { category } = req.params;
+        
+        const products = await Product.findByCategory(category);
+        
+        res.json({
+            success: true,
+            data: products,
+            category: category
+        });
+        
+    } catch (error) {
+        console.error('Error fetching products by category:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Kategori ürünleri getirilirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// GET /api/products/search/:query - Search products
+router.get('/search/:query', async (req, res) => {
+    try {
+        const { query } = req.params;
+        
+        const products = await Product.search(query);
+        
+        res.json({
+            success: true,
+            data: products,
+            query: query,
+            count: products.length
+        });
+        
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Ürün arama sırasında hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+module.exports = router; 

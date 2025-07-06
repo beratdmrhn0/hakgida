@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Hakgida</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="./assets/admin/admin.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal active">
+        <div class="login-content">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Panel Girişi</h2>
+                <p>Yetkilendirilmiş erişim gerekli</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fas fa-lock"></i>
+                        Şifre
+                    </label>
+                    <input type="password" id="adminPassword" placeholder="Admin şifresini girin" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </button>
+                <p class="login-hint">İpucu: Şifre "hakgida2024"</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-cogs"></i>
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#products" class="nav-item" data-tab="products">
+                    <i class="fas fa-box"></i>
+                    Ürün Yönetimi
+                </a>
+                <a href="#add-product" class="nav-item" data-tab="add-product">
+                    <i class="fas fa-plus"></i>
+                    Ürün Ekle
+                </a>
+                <a href="#categories" class="nav-item" data-tab="categories">
+                    <i class="fas fa-tags"></i>
+                    Kategoriler
+                </a>
+                <a href="#export" class="nav-item" data-tab="export">
+                    <i class="fas fa-download"></i>
+                    Veri Yönetimi
+                </a>
+                <hr>
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-external-link-alt"></i>
+                    Siteyi Görüntüle
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Çıkış Yap
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <span class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        Admin
+                    </span>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Tab -->
+                <section id="dashboard-tab" class="tab-content active">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalProducts">0</h3>
+                                <p>Toplam Ürün</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCategories">0</h3>
+                                <p>Kategori</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avgPrice">0₺</h3>
+                                <p>Ortalama Fiyat</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="lastUpdate">-</h3>
+                                <p>Son Güncelleme</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-products">
+                        <h3>Son Eklenen Ürünler</h3>
+                        <div class="recent-products-list" id="recentProductsList">
+                            <!-- Recent products will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Tab -->
+                <section id="products-tab" class="tab-content">
+                    <div class="products-header">
+                        <div class="search-container">
+                            <input type="text" id="productSearch" placeholder="Ürün ara...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="filter-container">
+                            <select id="categoryFilter">
+                                <option value="">Tüm Kategoriler</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="products-table-container">
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Resim</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Kategori</th>
+                                    <th>Fiyat</th>
+                                    <th>Stok</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Add Product Tab -->
+                <section id="add-product-tab" class="tab-content">
+                    <div class="form-container">
+                        <h3 id="formTitle">Yeni Ürün Ekle</h3>
+                        <form id="productForm">
+                            <input type="hidden" id="editProductId" value="">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productName">Ürün Adı *</label>
+                                    <input type="text" id="productName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productCategory">Kategori *</label>
+                                    <select id="productCategory" required>
+                                        <option value="">Kategori Seçin</option>
+                                        <option value="caylar">Çaylar</option>
+                                        <option value="baklagil">Baklagil</option>
+                                        <option value="baharat">Baharat</option>
+                                        <option value="organik">Organik</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productPrice">Fiyat (₺) *</label>
+                                    <input type="number" id="productPrice" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productStock">Stok *</label>
+                                    <input type="number" id="productStock" min="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productImage">Resim URL</label>
+                                <input type="url" id="productImage" placeholder="https://example.com/image.jpg">
+                                <div class="image-preview" id="imagePreview">
+                                    <img id="previewImg" src="" alt="Önizleme" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDescription">Açıklama *</label>
+                                <textarea id="productDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="productFeatures">Özellikler (Her satıra bir özellik)</label>
+                                <textarea id="productFeatures" rows="4" placeholder="Doğal içerik&#10;Taze ürün&#10;Kaliteli malzeme"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-save"></i>
+                                    <span id="submitBtnText">Ürün Ekle</span>
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="resetForm()">
+                                    <i class="fas fa-times"></i>
+                                    İptal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Categories Tab -->
+                <section id="categories-tab" class="tab-content">
+                    <div class="categories-container">
+                        <h3>Kategori Yönetimi</h3>
+                        <div class="categories-grid" id="categoriesGrid">
+                            <!-- Categories will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Export Tab -->
+                <section id="export-tab" class="tab-content">
+                    <div class="export-container">
+                        <div class="export-section">
+                            <h3>Veri Dışa Aktarma</h3>
+                            <p>Mevcut ürün verilerini JSON formatında indirin.</p>
+                            <button class="btn-primary" onclick="exportData()">
+                                <i class="fas fa-download"></i>
+                                JSON İndir
+                            </button>
+                        </div>
+                        <div class="export-section">
+                            <h3>Veri İçe Aktarma</h3>
+                            <p>JSON dosyasından ürün verilerini yükleyin.</p>
+                            <input type="file" id="importFile" accept=".json" style="display: none;">
+                            <button class="btn-secondary" onclick="importData()">
+                                <i class="fas fa-upload"></i>
+                                JSON Yükle
+                            </button>
+                        </div>
+                        <div class="export-section">
+                            <h3>Yedekleme</h3>
+                            <p>Son güncelleme: <span id="lastBackup">Henüz yedek alınmamış</span></p>
+                            <button class="btn-success" onclick="createBackup()">
+                                <i class="fas fa-shield-alt"></i>
+                                Yedek Oluştur
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Emin misiniz?</h3>
+            <p id="confirmMessage">Bu işlemi gerçekleştirmek istediğinizden emin misiniz?</p>
+            <div class="modal-actions">
+                <button class="btn-danger" id="confirmYes">Evet</button>
+                <button class="btn-secondary" id="confirmNo">Hayır</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script type="module" src="./assets/admin/admin.js"></script>
+</body>
+</html> 
