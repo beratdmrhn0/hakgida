@@ -7,21 +7,16 @@ const { Op } = require('sequelize');
 // GET /api/products - Get all products
 router.get('/', async (req, res) => {
     try {
-        const { category, search, sort, limit = 50, offset = 0 } = req.query;
+        const { search, sort, limit = 50, offset = 0 } = req.query;
         
-        let whereClause = { isActive: true };
+        let whereClause = {};
         let orderClause = [['createdAt', 'DESC']];
-        
-        // Category filter
-        if (category && category !== 'all') {
-            whereClause.category = category;
-        }
         
         // Search filter
         if (search) {
             whereClause[Op.or] = [
-                { name: { [Op.iLike]: `%${search}%` } },
-                { description: { [Op.iLike]: `%${search}%` } }
+                { name: { [Op.like]: `%${search}%` } },
+                { description: { [Op.like]: `%${search}%` } }
             ];
         }
         
@@ -81,9 +76,7 @@ router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         
-        const product = await Product.findOne({
-            where: { id, isActive: true }
-        });
+        const product = await Product.findByPk(id);
         
         if (!product) {
             return res.status(404).json({
@@ -199,7 +192,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE /api/products/:id - Delete product (soft delete)
+// DELETE /api/products/:id - Delete product
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -213,8 +206,8 @@ router.delete('/:id', async (req, res) => {
             });
         }
         
-        // Soft delete - mark as inactive
-        await product.update({ isActive: false });
+        // Hard delete
+        await product.destroy();
         
         res.json({
             success: true,
@@ -231,6 +224,26 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// GET /api/products/categories - Get all categories
+router.get('/categories', async (req, res) => {
+    try {
+        const categories = Product.getCategories();
+        
+        res.json({
+            success: true,
+            data: categories
+        });
+        
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Kategoriler getirilirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
 // GET /api/products/category/:category - Get products by category
 router.get('/category/:category', async (req, res) => {
     try {
@@ -241,7 +254,8 @@ router.get('/category/:category', async (req, res) => {
         res.json({
             success: true,
             data: products,
-            category: category
+            category: category,
+            count: products.length
         });
         
     } catch (error) {

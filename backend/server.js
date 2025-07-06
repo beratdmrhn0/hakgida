@@ -84,7 +84,7 @@ app.get('/', (req, res) => {
             admin: '/api/admin',
             upload: '/api/upload'
         },
-        documentation: 'https://github.com/yourusername/hakgida'
+        documentation: 'https://github.com/beratdmrhn0/hakgida'
     });
 });
 

@@ -1,22 +1,66 @@
 // Ürün Yönetimi
-import { products, categoryNames } from '../data/products.js';
 
 export class ProductManager {
     constructor() {
-        this.products = products;
-        this.filteredProducts = [...products];
+        this.products = [];
+        this.filteredProducts = [];
         this.currentCategory = 'all';
         this.currentPriceRange = 300;
         this.currentSort = 'default';
         this.searchTerm = '';
         
         this.productsGrid = document.getElementById('productsGrid');
+        this.categoryNames = {
+            'caylar': 'Çaylar',
+            'baklagil': 'Baklagil',
+            'baharat': 'Baharat',
+            'organik': 'Organik',
+            'kuruyemis': 'Kuruyemiş'
+        };
+        
         this.init();
     }
 
-    init() {
+    async init() {
         this.bindEvents();
+        await this.loadProductsFromBackend();
         this.loadProducts();
+    }
+
+    // Backend'den ürünleri yükle
+    async loadProductsFromBackend() {
+        try {
+            console.log('ProductManager: Backend\'den ürünler yükleniyor...');
+            
+            const response = await fetch('http://localhost:3001/api/products');
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.products = data.data || [];
+                
+                // Eski yapıya uygun şekilde dönüştür
+                this.products = this.products.map(product => ({
+                    ...product,
+                    image: product.image || this.getPlaceholderImage(),
+                    features: product.features || ['Doğal', 'Kaliteli', 'Taze'],
+                    inStock: product.stock > 0,
+                    stock: product.stock || 0
+                }));
+                
+                console.log('ProductManager: Ürünler yüklendi:', this.products.length, 'adet');
+            } else {
+                console.error('ProductManager: Backend hatası:', response.status);
+                this.products = [];
+            }
+        } catch (error) {
+            console.error('ProductManager: Bağlantı hatası:', error);
+            this.products = [];
+        }
+    }
+
+    // Placeholder image
+    getPlaceholderImage() {
+        return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23f0f0f0"/><text x="150" y="100" text-anchor="middle" dy=".3em" fill="%23999" font-family="Arial, sans-serif" font-size="16">Ürün Resmi</text></svg>';
     }
 
     bindEvents() {
@@ -138,7 +182,7 @@ export class ProductManager {
 
     // Kategori adı çevirici
     getCategoryName(category) {
-        return categoryNames[category] || 'Ürün';
+        return this.categoryNames[category] || 'Ürün';
     }
 
     // Ürün detay modal'ı

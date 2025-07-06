@@ -4,23 +4,28 @@ import { products as initialProducts } from '../js/data/products.js';
 // Admin Panel JavaScript
 class AdminPanel {
     constructor() {
-        this.products = [...initialProducts];
+        this.products = []; // Backend'den yüklenecek
         this.isLoggedIn = false;
         this.currentEditId = null;
         
         this.categories = {
-            'caylar': { name: 'Çaylar', icon: 'fas fa-leaf', color: '#27ae60' },
-            'baklagil': { name: 'Baklagil', icon: 'fas fa-seedling', color: '#e74c3c' },
-            'baharat': { name: 'Baharat', icon: 'fas fa-pepper-hot', color: '#f39c12' },
-            'organik': { name: 'Organik', icon: 'fas fa-spa', color: '#8e44ad' }
+            'caylar': { name: 'Çaylar', icon: 'fas fa-leaf', color: '#27ae60', emoji: '🍃' },
+            'baklagil': { name: 'Baklagil', icon: 'fas fa-seedling', color: '#e74c3c', emoji: '🫘' },
+            'baharat': { name: 'Baharat', icon: 'fas fa-pepper-hot', color: '#f39c12', emoji: '🌶️' },
+            'organik': { name: 'Organik', icon: 'fas fa-spa', color: '#8e44ad', emoji: '🌱' },
+            'kuruyemis': { name: 'Kuruyemiş', icon: 'fas fa-apple-alt', color: '#795548', emoji: '🥜' }
         };
         
         this.init();
     }
     
-    init() {
+    async init() {
         this.checkLoginStatus();
         this.bindEvents();
+        
+        // Backend'den ürünleri yükle
+        await this.loadProductsFromBackend();
+        
         this.updateDashboard();
         this.loadProducts();
         this.loadCategories();
@@ -65,11 +70,14 @@ class AdminPanel {
     // Event Binding
     bindEvents() {
         // Login form
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const password = document.getElementById('adminPassword').value;
-            this.login(password);
-        });
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const password = document.getElementById('adminPassword').value;
+                this.login(password);
+            });
+        }
         
         // Tab navigation
         document.querySelectorAll('[data-tab]').forEach(tab => {
@@ -81,39 +89,71 @@ class AdminPanel {
         });
         
         // Sidebar toggle (mobile)
-        document.getElementById('sidebarToggle').addEventListener('click', () => {
-            document.querySelector('.sidebar').classList.toggle('active');
-        });
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+        }
         
         // Product form
-        document.getElementById('productForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveProduct();
-        });
+        const productForm = document.getElementById('productForm');
+        if (productForm) {
+            productForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.saveProduct();
+            });
+        }
         
-        // Image preview
-        document.getElementById('productImage').addEventListener('input', (e) => {
-            this.previewImage(e.target.value);
-        });
-        
-        // Product search
-        document.getElementById('productSearch').addEventListener('input', (e) => {
-            this.searchProducts(e.target.value);
-        });
+                // Product search
+        const productSearch = document.getElementById('productSearch');
+        if (productSearch) {
+            productSearch.addEventListener('input', (e) => {
+                this.searchProducts(e.target.value);
+            });
+        }
         
         // Category filter
-        document.getElementById('categoryFilter').addEventListener('change', (e) => {
-            this.filterProducts(e.target.value);
-        });
+        const categoryFilter = document.getElementById('categoryFilter');
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', (e) => {
+                this.filterProducts(e.target.value);
+            });
+        }
         
         // Import file
-        document.getElementById('importFile').addEventListener('change', (e) => {
-            this.handleFileImport(e.target.files[0]);
-        });
+        const importFile = document.getElementById('importFile');
+        if (importFile) {
+            importFile.addEventListener('change', (e) => {
+                this.handleFileImport(e.target.files[0]);
+            });
+        }
         
         // Confirm modal
-        document.getElementById('confirmNo').addEventListener('click', () => {
-            this.hideConfirmModal();
+        const confirmNo = document.getElementById('confirmNo');
+        if (confirmNo) {
+            confirmNo.addEventListener('click', () => {
+                this.hideConfirmModal();
+            });
+        }
+
+        // Image preview
+        const productImage = document.getElementById('productImage');
+        if (productImage) {
+            productImage.addEventListener('input', (e) => {
+                this.previewImage(e.target.value);
+            });
+        }
+
+        // Category selection cards (delegated event listener)
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.category-card')) {
+                const categoryCard = e.target.closest('.category-card');
+                const category = categoryCard.dataset.category;
+                if (category && window.adminPanel) {
+                    window.adminPanel.selectCategory(category);
+                }
+            }
         });
     }
     
@@ -148,6 +188,8 @@ class AdminPanel {
             this.loadProducts();
         } else if (tabName === 'categories') {
             this.loadCategories();
+        } else if (tabName === 'add-product') {
+            this.showCategorySelection();
         }
     }
     
@@ -190,6 +232,26 @@ class AdminPanel {
         `).join('');
     }
     
+    // Backend'den ürünleri yükle
+    async loadProductsFromBackend() {
+        try {
+            console.log('Backend\'den ürünler yükleniyor...');
+            const response = await fetch('http://localhost:3001/api/products');
+            
+            if (response.ok) {
+                const data = await response.json();
+                this.products = data.data || [];
+                console.log('Ürünler başarıyla yüklendi:', this.products.length, 'adet');
+            } else {
+                console.error('Backend\'den ürün yükleme hatası:', response.status);
+                this.products = [];
+            }
+        } catch (error) {
+            console.error('Backend bağlantı hatası:', error);
+            this.products = [];
+        }
+    }
+
     // Product Management
     loadProducts() {
         const tbody = document.getElementById('productsTableBody');
@@ -283,27 +345,137 @@ class AdminPanel {
         this.renderProductsTable(filtered);
     }
     
+    // Category Selection Management
+    showCategorySelection() {
+        const categorySelection = document.getElementById('categorySelection');
+        const productFormContainer = document.getElementById('productFormContainer');
+        
+        if (categorySelection && productFormContainer) {
+            categorySelection.style.display = 'block';
+            productFormContainer.style.display = 'none';
+        }
+        
+        // Kategori seçimi için form alanlarını sıfırla
+        document.getElementById('productName').value = '';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productDescription').value = '';
+        document.getElementById('productImage').value = '';
+        document.getElementById('productStock').value = '0';
+        document.getElementById('editProductId').value = '';
+        document.getElementById('selectedCategory').value = '';
+        document.getElementById('submitBtnText').textContent = 'Ürün Ekle';
+        
+        // Resim ön izlemeyi gizle
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+    
+    selectCategory(categoryKey) {
+        if (!this.categories[categoryKey]) return;
+        
+        const category = this.categories[categoryKey];
+        this.showProductForm(categoryKey, category);
+    }
+    
+    showProductForm(categoryKey, category) {
+        const categorySelection = document.getElementById('categorySelection');
+        const productFormContainer = document.getElementById('productFormContainer');
+        const categoryIcon = document.getElementById('categoryIcon');
+        const categoryName = document.getElementById('categoryName');
+        const selectedCategory = document.getElementById('selectedCategory');
+        
+        // Hide category selection, show form
+        categorySelection.style.display = 'none';
+        productFormContainer.style.display = 'block';
+        
+        // Update form header
+        categoryIcon.textContent = category.emoji;
+        categoryName.textContent = category.name;
+        selectedCategory.value = categoryKey;
+        
+        // Form alanlarını sıfırla ama kategoriyi koru
+        document.getElementById('productName').value = '';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productDescription').value = '';
+        document.getElementById('productImage').value = '';
+        document.getElementById('productStock').value = '0';
+        document.getElementById('editProductId').value = '';
+        document.getElementById('submitBtnText').textContent = 'Ürün Ekle';
+        
+        // Resim ön izlemeyi gizle
+        document.getElementById('imagePreview').style.display = 'none';
+        
+        // Form başlığını güncelle
+        document.getElementById('formTitle').innerHTML = `
+            <span id="categoryIcon">${category.emoji}</span>
+            <span id="categoryName">${category.name}</span> Ürünü Ekle
+        `;
+    }
+    
+    backToCategorySelection() {
+        this.showCategorySelection();
+    }
+
     // Product CRUD Operations
     saveProduct() {
-        const form = document.getElementById('productForm');
-        const formData = new FormData(form);
+        console.log('saveProduct called');
+        
+        // Form elementlerini kontrol et
+        const nameElement = document.getElementById('productName');
+        const categoryElement = document.getElementById('selectedCategory');
+        const priceElement = document.getElementById('productPrice');
+        const descriptionElement = document.getElementById('productDescription');
+        const imageElement = document.getElementById('productImage');
+        const stockElement = document.getElementById('productStock');
+        
+        console.log('Form elements:', {
+            name: nameElement,
+            category: categoryElement,
+            price: priceElement,
+            description: descriptionElement,
+            image: imageElement,
+            stock: stockElement
+        });
+        
+        if (!nameElement || !categoryElement || !priceElement || !descriptionElement || !imageElement || !stockElement) {
+            this.showToast('Form elementleri bulunamadı!', 'error');
+            console.error('Missing form elements');
+            return;
+        }
         
         const productData = {
-            name: document.getElementById('productName').value.trim(),
-            category: document.getElementById('productCategory').value,
-            price: parseFloat(document.getElementById('productPrice').value),
-            stock: parseInt(document.getElementById('productStock').value),
-            image: document.getElementById('productImage').value.trim() || this.getPlaceholderImage(),
-            description: document.getElementById('productDescription').value.trim(),
-            features: document.getElementById('productFeatures').value
-                .split('\n')
-                .map(f => f.trim())
-                .filter(f => f.length > 0)
+            name: nameElement.value.trim(),
+            category: categoryElement.value,
+            price: parseFloat(priceElement.value),
+            description: descriptionElement.value.trim(),
+            image: imageElement.value.trim() || null, // Boşsa null gönder
+            stock: parseInt(stockElement.value) || 0
         };
         
+        console.log('Product data:', productData);
+        
         // Validation
-        if (!productData.name || !productData.category || !productData.description) {
-            this.showToast('Lütfen zorunlu alanları doldurun!', 'error');
+        if (!productData.name) {
+            this.showToast('Ürün adı boş olamaz!', 'error');
+            return;
+        }
+        
+        if (!productData.category) {
+            this.showToast('Kategori seçilmemiş!', 'error');
+            return;
+        }
+        
+        if (!productData.description) {
+            this.showToast('Ürün açıklaması boş olamaz!', 'error');
+            return;
+        }
+        
+        if (!productData.price || productData.price <= 0) {
+            this.showToast('Geçerli bir fiyat girin!', 'error');
+            return;
+        }
+        
+        if (productData.stock < 0) {
+            this.showToast('Stok adeti negatif olamaz!', 'error');
             return;
         }
         
@@ -313,14 +485,30 @@ class AdminPanel {
             // Update existing product
             const index = this.products.findIndex(p => p.id == editId);
             if (index !== -1) {
-                this.products[index] = { ...this.products[index], ...productData };
+                // Local için image placeholder kullan
+                const localProductData = {
+                    ...productData,
+                    image: productData.image || this.getPlaceholderImage()
+                };
+                this.products[index] = { ...this.products[index], ...localProductData };
                 this.showToast('Ürün başarıyla güncellendi!', 'success');
+                
+                // Backend'e güncelleme gönder (image null olarak)
+                this.updateProductToBackend(editId, {...productData, image: productData.image || null});
             }
         } else {
             // Add new product
             const newId = Math.max(...this.products.map(p => p.id), 0) + 1;
-            this.products.push({ id: newId, ...productData });
+            const newProduct = { 
+                id: newId, 
+                ...productData,
+                image: productData.image || this.getPlaceholderImage() // Local için placeholder, backend için null
+            };
+            this.products.push(newProduct);
             this.showToast('Ürün başarıyla eklendi!', 'success');
+            
+            // Backend'e kaydet (image null olarak)
+            this.saveProductToBackend({...productData, image: productData.image || null});
         }
         
         this.resetForm();
@@ -329,26 +517,109 @@ class AdminPanel {
         this.switchTab('products');
     }
     
+    // Backend'e ürün kaydetme
+    async saveProductToBackend(product) {
+        try {
+            console.log('Backend\'e gönderilecek data:', product);
+            
+            const response = await fetch('http://localhost:3001/api/products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    description: product.description,
+                    image: product.image,
+                    stock: product.stock
+                })
+            });
+            
+            console.log('Backend response status:', response.status);
+            
+            if (response.ok) {
+                const savedProduct = await response.json();
+                console.log('Ürün backend\'e kaydedildi:', savedProduct);
+                this.showToast('Ürün veritabanına kaydedildi!', 'success');
+            } else {
+                const errorData = await response.json().catch(() => null);
+                console.error('Backend kaydetme hatası:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    errorData: errorData
+                });
+                this.showToast(`Veritabanı hatası: ${response.status}`, 'error');
+            }
+        } catch (error) {
+            console.error('Backend bağlantı hatası:', error);
+            this.showToast('Backend bağlantı hatası: ' + error.message, 'error');
+        }
+    }
+    
+    // Backend'de ürün güncelleme
+    async updateProductToBackend(id, product) {
+        try {
+            const response = await fetch(`http://localhost:3001/api/products/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    description: product.description,
+                    image: product.image,
+                    stock: product.stock
+                })
+            });
+            
+            if (response.ok) {
+                const updatedProduct = await response.json();
+                console.log('Ürün backend\'de güncellendi:', updatedProduct);
+                this.showToast('Ürün veritabanında güncellendi!', 'success');
+            } else {
+                console.error('Backend güncelleme hatası:', response.statusText);
+                this.showToast('Veritabanında güncelleme hatası!', 'warning');
+            }
+        } catch (error) {
+            console.error('Backend bağlantı hatası:', error);
+            this.showToast('Backend bağlantı hatası!', 'warning');
+        }
+    }
+    
     editProduct(id) {
         const product = this.products.find(p => p.id === id);
         if (!product) return;
         
+        // Get category info
+        const category = this.categories[product.category];
+        if (!category) return;
+        
+        // Show product form directly for editing
+        this.showProductForm(product.category, category);
+        
         // Fill form
         document.getElementById('editProductId').value = product.id;
         document.getElementById('productName').value = product.name;
-        document.getElementById('productCategory').value = product.category;
         document.getElementById('productPrice').value = product.price;
-        document.getElementById('productStock').value = product.stock;
-        document.getElementById('productImage').value = product.image;
         document.getElementById('productDescription').value = product.description;
-        document.getElementById('productFeatures').value = product.features.join('\n');
+        document.getElementById('productImage').value = product.image || '';
+        document.getElementById('productStock').value = product.stock || 0;
+        
+        // Resim ön izlemeyi göster
+        if (product.image) {
+            this.previewImage(product.image);
+        }
         
         // Update form title and button
-        document.getElementById('formTitle').textContent = 'Ürün Düzenle';
+        document.getElementById('formTitle').innerHTML = `
+            <span id="categoryIcon">${category.emoji}</span>
+            <span id="categoryName">${category.name}</span> Ürününü Düzenle
+        `;
         document.getElementById('submitBtnText').textContent = 'Güncelle';
-        
-        // Preview image
-        this.previewImage(product.image);
         
         // Switch to form tab
         this.switchTab('add-product');
@@ -372,24 +643,32 @@ class AdminPanel {
     }
     
     resetForm() {
-        document.getElementById('productForm').reset();
+        // Sadece gerekli alanları sıfırla, selectedCategory'yi koru
+        document.getElementById('productName').value = '';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productDescription').value = '';
+        document.getElementById('productImage').value = '';
+        document.getElementById('productStock').value = '0';
         document.getElementById('editProductId').value = '';
-        document.getElementById('formTitle').textContent = 'Yeni Ürün Ekle';
         document.getElementById('submitBtnText').textContent = 'Ürün Ekle';
-        document.getElementById('previewImg').style.display = 'none';
+        
+        // Resim ön izlemeyi gizle
+        document.getElementById('imagePreview').style.display = 'none';
     }
     
     // Image Management
     previewImage(url) {
         const img = document.getElementById('previewImg');
+        const preview = document.getElementById('imagePreview');
+        
         if (url && url.trim()) {
             img.src = url;
-            img.style.display = 'block';
+            preview.style.display = 'block';
             img.onerror = () => {
-                img.style.display = 'none';
+                preview.style.display = 'none';
             };
         } else {
-            img.style.display = 'none';
+            preview.style.display = 'none';
         }
     }
     
@@ -568,10 +847,38 @@ window.createBackup = function() {
     adminPanel.createBackup();
 };
 
-// Initialize admin panel
-const adminPanel = new AdminPanel();
+window.backToCategorySelection = function() {
+    adminPanel.backToCategorySelection();
+};
 
-// Make it globally available for debugging
-window.adminPanel = adminPanel;
+window.selectCategoryCard = function(categoryKey) {
+    console.log('selectCategoryCard called with:', categoryKey);
+    if (window.adminPanel && typeof window.adminPanel.selectCategory === 'function') {
+        window.adminPanel.selectCategory(categoryKey);
+    } else {
+        console.error('AdminPanel not ready yet, retrying in 100ms...');
+        setTimeout(() => {
+            if (window.adminPanel && typeof window.adminPanel.selectCategory === 'function') {
+                window.adminPanel.selectCategory(categoryKey);
+            }
+        }, 100);
+    }
+};
+
+// Initialize admin panel when DOM is ready
+let adminPanel;
+
+function initializeAdminPanel() {
+    adminPanel = new AdminPanel();
+    window.adminPanel = adminPanel;
+    console.log('AdminPanel initialized successfully');
+}
+
+// Initialize immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAdminPanel);
+} else {
+    initializeAdminPanel();
+}
 
 export default AdminPanel; 

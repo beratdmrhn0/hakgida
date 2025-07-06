@@ -1,20 +1,71 @@
-// Import products data
-import { products } from './data/products.js';
+// Global products array
+let products = [];
 
 // Page initialization
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Sayfa yüklendiğinde loaded class'ını ekle
     document.body.classList.add('loaded');
     
-    initializeProductsPage();
+    await initializeProductsPage();
     setupEventListeners();
     checkURLParameters();
 });
 
 // Initialize products page
-function initializeProductsPage() {
+async function initializeProductsPage() {
+    // Backend'den ürünleri yükle
+    await loadProductsFromBackend();
     renderProducts(products);
     setupMobileMenu();
+}
+
+// Backend'den ürünleri yükle
+async function loadProductsFromBackend() {
+    try {
+        console.log('Backend\'den ürünler yükleniyor...');
+        
+        const response = await fetch('http://localhost:3001/api/products');
+        
+        if (response.ok) {
+            const data = await response.json();
+            products = data.data || [];
+            
+            // Placeholder image ekle
+            products = products.map(product => ({
+                ...product,
+                image: product.image || getPlaceholderImage(),
+                features: product.features || [] // Eski kodlar için
+            }));
+            
+            console.log('Ürünler başarıyla yüklendi:', products.length, 'adet');
+        } else {
+            console.error('Backend\'den ürün yükleme hatası:', response.status);
+            showNoConnectionMessage();
+        }
+    } catch (error) {
+        console.error('Backend bağlantı hatası:', error);
+        showNoConnectionMessage();
+    }
+}
+
+// Bağlantı hatası mesajı
+function showNoConnectionMessage() {
+    const productsGrid = document.getElementById('productsGrid');
+    productsGrid.innerHTML = `
+        <div class="no-products">
+            <i class="fas fa-wifi fa-3x" style="margin-bottom: 1rem; color: #ef4444;"></i>
+            <h3>Bağlantı Hatası</h3>
+            <p>Ürünler yüklenemiyor. Lütfen sayfayı yenileyin.</p>
+            <button class="btn btn-primary" onclick="window.location.reload()">
+                <i class="fas fa-redo"></i> Sayfayı Yenile
+            </button>
+        </div>
+    `;
+}
+
+// Placeholder image
+function getPlaceholderImage() {
+    return 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23f0f0f0"/><text x="150" y="100" text-anchor="middle" dy=".3em" fill="%23999" font-family="Arial, sans-serif" font-size="16">Ürün Resmi</text></svg>';
 }
 
 // Setup event listeners
@@ -158,7 +209,8 @@ function getCategoryName(category) {
         'caylar': 'Çaylar',
         'baklagil': 'Baklagil',
         'baharat': 'Baharat',
-        'organik': 'Organik'
+        'organik': 'Organik',
+        'kuruyemis': 'Kuruyemiş'
     };
     return categoryNames[category] || category;
 }
