@@ -25,14 +25,35 @@ const Product = sequelize.define('Product', {
                 msg: 'Kategori boş olamaz'
             },
             isIn: {
-                args: [['caylar', 'baklagil', 'baharat', 'organik', 'kuruyemis']],
+                args: [['caylar', 'baklagil', 'bakliyat', 'bulgur', 'baharat', 'salca', 'makarna', 'seker', 'yag', 'icecek', 'organik', 'kuruyemis']],
                 msg: 'Geçersiz kategori'
+            }
+        }
+    },
+    brand: {
+        type: DataTypes.STRING(100),
+        allowNull: true, // Geriye dönük uyumluluk için opsiyonel bırakıyoruz
+        validate: {
+            len: {
+                args: [0, 100],
+                msg: 'Marka adı 100 karakteri geçemez'
+            }
+        }
+    },
+    type: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        validate: {
+            len: {
+                args: [0, 100],
+                msg: 'Ürün türü 100 karakteri geçemez'
             }
         }
     },
     price: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 0,
         validate: {
             min: {
                 args: [0],
@@ -50,13 +71,26 @@ const Product = sequelize.define('Product', {
         }
     },
     image: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.TEXT, // Base64 string'ler uzun olabileceği için TEXT kullan
         allowNull: true,
-        defaultValue: null
+        defaultValue: null,
+        validate: {
+            isValidImage(value) {
+                if (value && value.trim()) {
+                    // URL veya base64 string kontrolü
+                    const isUrl = /^https?:\/\/.+/.test(value);
+                    const isBase64 = /^data:image\/.+;base64,/.test(value);
+                    
+                    if (!isUrl && !isBase64) {
+                        throw new Error('Geçerli bir URL veya resim dosyası olmalıdır');
+                    }
+                }
+            }
+        }
     },
     stock: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0,
         validate: {
             min: {
@@ -106,7 +140,8 @@ Product.search = function(query) {
         where: {
             [sequelize.Sequelize.Op.or]: [
                 { name: { [sequelize.Sequelize.Op.like]: `%${query}%` } },
-                { description: { [sequelize.Sequelize.Op.like]: `%${query}%` } }
+                { description: { [sequelize.Sequelize.Op.like]: `%${query}%` } },
+                { brand: { [sequelize.Sequelize.Op.like]: `%${query}%` } }
             ]
         },
         order: [['createdAt', 'DESC']]

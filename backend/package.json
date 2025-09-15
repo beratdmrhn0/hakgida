@@ -5,11 +5,14 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "cpanel-start": "NODE_ENV=production node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'No build step required'",
-    "deploy": "echo 'Railway deployment'",
+    "build": "npm install --production",
+    "deploy": "echo 'cPanel deployment'",
     "db:migrate": "node scripts/migrate.js",
-    "db:seed": "node scripts/seed.js"
+    "db:seed": "node scripts/seed.js",
+    "cpanel-install": "npm install --production --no-optional",
+    "cpanel-setup": "npm run cpanel-install && npm run db:migrate && npm run db:seed"
   },
   "keywords": [
     "nodejs",
@@ -34,14 +37,15 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.14.1",
     "rate-limiter-flexible": "^4.0.1",
-    "sequelize": "^6.35.0"
+    "sequelize": "^6.35.0",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "repository": {
     "type": "git",

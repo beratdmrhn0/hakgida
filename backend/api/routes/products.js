@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 // GET /api/products - Get all products
 router.get('/', async (req, res) => {
     try {
-        const { search, sort, limit = 50, offset = 0 } = req.query;
+        const { search, sort, limit = 50, offset = 0, brand, category } = req.query;
         
         let whereClause = {};
         let orderClause = [['createdAt', 'DESC']];
@@ -16,8 +16,19 @@ router.get('/', async (req, res) => {
         if (search) {
             whereClause[Op.or] = [
                 { name: { [Op.like]: `%${search}%` } },
-                { description: { [Op.like]: `%${search}%` } }
+                { description: { [Op.like]: `%${search}%` } },
+                { brand: { [Op.like]: `%${search}%` } }
             ];
+        }
+
+        // Brand filter
+        if (brand) {
+            whereClause.brand = { [Op.like]: `%${brand}%` };
+        }
+
+        // Category filter
+        if (category) {
+            whereClause.category = category;
         }
         
         // Sort options
@@ -105,8 +116,8 @@ router.post('/', async (req, res) => {
     try {
         const productData = req.body;
         
-        // Validate required fields
-        const requiredFields = ['name', 'category', 'price', 'description'];
+        // Validate required fields (price and stock are now optional)
+        const requiredFields = ['name', 'category', 'description'];
         const missingFields = requiredFields.filter(field => !productData[field]);
         
         if (missingFields.length > 0) {
@@ -115,6 +126,14 @@ router.post('/', async (req, res) => {
                 error: 'Eksik alanlar',
                 missingFields
             });
+        }
+        
+        // Set default values for optional fields
+        if (!productData.price || productData.price === '') {
+            productData.price = 0;
+        }
+        if (!productData.stock || productData.stock === '') {
+            productData.stock = 0;
         }
         
         const product = await Product.create(productData);
@@ -263,6 +282,33 @@ router.get('/category/:category', async (req, res) => {
         res.status(500).json({
             success: false,
             error: 'Kategori ürünleri getirilirken hata oluştu',
+            message: error.message
+        });
+    }
+});
+
+// GET /api/products/brand/:brand - Get products by brand
+router.get('/brand/:brand', async (req, res) => {
+    try {
+        const { brand } = req.params;
+        const products = await Product.findAll({
+            where: { brand: { [Op.like]: `%${brand}%` } },
+            order: [['createdAt', 'DESC']]
+        });
+
+        // Farklı büyük/küçük yazımlar için gruplanmış brand etiketi döndür
+        const normalized = brand;
+        res.json({
+            success: true,
+            data: products,
+            brand: normalized,
+            count: products.length
+        });
+    } catch (error) {
+        console.error('Error fetching products by brand:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Marka ürünleri getirilirken hata oluştu',
             message: error.message
         });
     }

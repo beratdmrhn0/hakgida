@@ -27,8 +27,16 @@ const upload = multer({
 });
 
 // POST /api/upload - Upload image
-router.post('/', upload.single('image'), (req, res) => {
-    try {
+router.post('/', (req, res) => {
+    upload.single('image')(req, res, (err) => {
+        if (err) {
+            console.error('Multer error:', err);
+            return res.status(400).json({
+                success: false,
+                error: err.message || 'Dosya yüklenirken hata oluştu'
+            });
+        }
+        
         if (!req.file) {
             return res.status(400).json({
                 success: false,
@@ -48,15 +56,7 @@ router.post('/', upload.single('image'), (req, res) => {
             },
             message: 'Dosya başarıyla yüklendi'
         });
-        
-    } catch (error) {
-        console.error('Error uploading file:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Dosya yüklenirken hata oluştu',
-            message: error.message
-        });
-    }
+    });
 });
 
 module.exports = router; 

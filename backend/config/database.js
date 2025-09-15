@@ -13,12 +13,17 @@ let sequelize;
 if (DATABASE_URL) {
     // Check if it's a production/cloud database (has cloud provider domain)
     const isCloudDatabase = DATABASE_URL.includes('railway.app') || 
-                           DATABASE_URL.includes('render.com') || 
-                           DATABASE_URL.includes('planetscale.com') ||
-                           DATABASE_URL.includes('amazonaws.com') ||
-                           !DATABASE_URL.includes('localhost');
+                            DATABASE_URL.includes('render.com') || 
+                            DATABASE_URL.includes('planetscale.com') ||
+                            DATABASE_URL.includes('amazonaws.com') ||
+                            !DATABASE_URL.includes('localhost');
     
-    if (isCloudDatabase) {
+    // Check if it's cPanel hosting
+    const isCpanelDatabase = DATABASE_URL.includes('localhost') || 
+                            DATABASE_URL.includes(process.env.CPANEL_HOST) ||
+                            DATABASE_URL.includes('mysql') && !isCloudDatabase;
+    
+    if (isCloudDatabase && !isCpanelDatabase) {
         // Production/Cloud database with SSL
         sequelize = new Sequelize(DATABASE_URL, {
             dialectOptions: {
@@ -51,10 +56,14 @@ if (DATABASE_URL) {
             }
         });
     } else {
-        // Local database (localhost) without SSL
+        // Local database (localhost) or cPanel without SSL
         sequelize = new Sequelize(DATABASE_URL, {
             dialectOptions: {
-                ssl: false
+                ssl: false,
+                // cPanel specific settings
+                connectTimeout: 60000,
+                acquireTimeout: 60000,
+                timeout: 60000
             },
             logging: process.env.NODE_ENV === 'development' ? console.log : false,
             pool: {
@@ -133,4 +142,4 @@ module.exports = {
     initializeDatabase,
     closeConnection,
     Sequelize
-}; 
+};

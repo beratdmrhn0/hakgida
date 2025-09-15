@@ -1,12 +1,13 @@
-# Hakgida Backend Environment Variables
+# Hakgida Backend Environment Variables - cPanel Production
 
 # Server Configuration
 NODE_ENV=production
 PORT=3001
 
-# Database Configuration (Railway will auto-provide these)
-DATABASE_URL=postgresql://username:password@host:port/database
-DATABASE_PRIVATE_URL=postgresql://username:password@private-host:port/database
+# cPanel MySQL Database Configuration
+# cPanel'den alacağınız bilgiler:
+DATABASE_URL=mysql://cpanel_username:cpanel_password@localhost:3306/cpanel_database_name
+# Örnek: mysql://hakgida_user:secure_password@localhost:3306/hakgida_db
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key-here
@@ -15,9 +16,10 @@ JWT_EXPIRES_IN=24h
 # Admin Configuration
 ADMIN_PASSWORD=hakgida2024
 
-# CORS Configuration
-FRONTEND_URL=https://hakgida.com
-ADMIN_URL=https://hakgida.com/admin.html
+# CORS Configuration - Your Domain
+FRONTEND_URL=https://yourdomain.com
+ADMIN_URL=https://yourdomain.com/admin.html
+CORS_ORIGIN=https://yourdomain.com
 
 # Upload Configuration
 UPLOAD_MAX_SIZE=5242880
