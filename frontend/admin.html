@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Hakgida</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+    
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="./assets/admin/admin.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Configuration -->
+    <script src="./config.js"></script>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal active">
+        <div class="login-content">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>Admin Panel Girişi</h2>
+                <p>Yetkilendirilmiş erişim gerekli</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fas fa-lock"></i>
+                        Şifre
+                    </label>
+                    <input type="password" id="adminPassword" placeholder="Admin şifresini girin" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Giriş Yap
+                </button>
+                <p class="login-hint">İpucu: Şifre "hakgida2024"</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-cogs"></i>
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+                <a href="#products" class="nav-item" data-tab="products">
+                    <i class="fas fa-box"></i>
+                    Ürün Yönetimi
+                </a>
+                <a href="#add-product" class="nav-item" data-tab="add-product">
+                    <i class="fas fa-plus"></i>
+                    Ürün Ekle
+                </a>
+                <a href="#categories" class="nav-item" data-tab="categories">
+                    <i class="fas fa-tags"></i>
+                    Kategoriler
+                </a>
+                <a href="#export" class="nav-item" data-tab="export">
+                    <i class="fas fa-download"></i>
+                    Veri Yönetimi
+                </a>
+                <hr>
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-external-link-alt"></i>
+                    Siteyi Görüntüle
+                </a>
+                <a href="#" class="nav-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Çıkış Yap
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <span class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        Admin
+                    </span>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Tab -->
+                <section id="dashboard-tab" class="tab-content active">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalProducts">0</h3>
+                                <p>Toplam Ürün</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalCategories">0</h3>
+                                <p>Kategori</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avgPrice">0₺</h3>
+                                <p>Ortalama Fiyat</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="lastUpdate">-</h3>
+                                <p>Son Güncelleme</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-products">
+                        <h3>Son Eklenen Ürünler</h3>
+                        <div class="recent-products-list" id="recentProductsList">
+                            <!-- Recent products will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Tab -->
+                <section id="products-tab" class="tab-content">
+                    <div class="products-header">
+                        <div class="search-container">
+                            <input type="text" id="productSearch" placeholder="Ürün ara...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="filter-container">
+                            <select id="categoryFilter">
+                                <option value="">Tüm Kategoriler</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="products-table-container">
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th>Resim</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Kategori</th>
+                                    <th>Fiyat</th>
+                                    <th>Stok</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Add Product Tab -->
+                <section id="add-product-tab" class="tab-content">
+                    <!-- Category Selection Screen -->
+                    <div id="categorySelection" class="category-selection">
+                        <h3>Hangi Markaya Ürün Eklemek İstiyorsunuz?</h3>
+                        <p>Eklemek istediğiniz ürünün markasını seçin:</p>
+                        <div class="category-grid">
+                            <div class="category-card brand-card" data-brand="harfece-bakliyat" onclick="window.adminPanel.selectBrand('harfece-bakliyat')">
+                                <div class="category-icon"><img src="assets/images/harfece.png" alt="Harfece" style="height:40px;object-fit:contain;"></div>
+                                <h4>Harfece</h4>
+                                <p>Bakliyat</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="kalbak-bakliyat" onclick="window.adminPanel.selectBrand('kalbak-bakliyat')">
+                                <div class="category-icon"><img src="assets/images/kalbak.png" alt="Kalbak" style="height:40px;object-fit:contain;"></div>
+                                <h4>Kalbak</h4>
+                                <p>Bakliyat</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="mert-kup-seker" onclick="window.adminPanel.selectBrand('mert-kup-seker')">
+                                <div class="category-icon"><img src="assets/images/mgs-logo.jpg" alt="Mert Küp Şeker" style="height:40px;object-fit:contain;"></div>
+                                <h4>Mert Küp Şeker</h4>
+                                <p>Şeker</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="turna-yag" onclick="window.adminPanel.selectBrand('turna-yag')">
+                                <div class="category-icon"><img src="assets/images/turna-logo.png" alt="Turna" style="height:40px;object-fit:contain;"></div>
+                                <h4>Turna</h4>
+                                <p>Yağ</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="cagdas-bulgur" onclick="window.adminPanel.selectBrand('cagdas-bulgur')">
+                                <div class="category-icon"><img src="assets/images/cagdas-bulgur.png" alt="Çağdaş Bulgur" style="height:40px;object-fit:contain;"></div>
+                                <h4>Çağdaş Bulgur</h4>
+                                <p>Bulgur</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="arbel-bulgur" onclick="window.adminPanel.selectBrand('arbel-bulgur')">
+                                <div class="category-icon"><img src="assets/images/arbel-bulgur-bakliyat.png" alt="Arbel" style="height:40px;object-fit:contain;"></div>
+                                <h4>Arbel</h4>
+                                <p>Bulgur & Bakliyat</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="turkiye-seker" onclick="window.adminPanel.selectBrand('turkiye-seker')">
+                                <div class="category-icon"><img src="assets/images/turkseker-logo.webp" alt="Türkşeker" style="height:40px;object-fit:contain;"></div>
+                                <h4>Türkşeker</h4>
+                                <p>Şeker</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="er-mis-salca" onclick="window.adminPanel.selectBrand('er-mis-salca')">
+                                <div class="category-icon"><img src="assets/images/ermis_logo.jpg" alt="Er Mis" style="height:40px;object-fit:contain;"></div>
+                                <h4>Er Mis</h4>
+                                <p>Salça</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="ovella-makarna" onclick="window.adminPanel.selectBrand('ovella-makarna')">
+                                <div class="category-icon"><img src="assets/images/ova-makarna.png" alt="Ovella" style="height:40px;object-fit:contain;"></div>
+                                <h4>Ovella</h4>
+                                <p>Makarna</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="beypazari" onclick="window.adminPanel.selectBrand('beypazari')">
+                                <div class="category-icon"><img src="assets/images/beypazarı.png" alt="Beypazarı" style="height:40px;object-fit:contain;"></div>
+                                <h4>Beypazarı</h4>
+                                <p>İçecek</p>
+                            </div>
+                            <div class="category-card brand-card" data-brand="caykur" onclick="window.adminPanel.selectBrand('caykur')">
+                                <div class="category-icon"><img src="assets/images/caykur-logo.png" alt="Çaykur" style="height:40px;object-fit:contain;"></div>
+                                <h4>Çaykur</h4>
+                                <p>Çay</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Form (Initially Hidden) -->
+                    <div id="productFormContainer" class="form-container" style="display: none;">
+                        <!-- Brand Header -->
+                        <div class="brand-header">
+                            <button type="button" class="back-btn" onclick="backToCategorySelection()">
+                                <i class="fas fa-arrow-left"></i>
+                                Geri
+                            </button>
+                            <div class="brand-info">
+                                <div class="brand-logo-large" id="brandLogoLarge">
+                                    <img id="brandLogoImg" src="" alt="">
+                                </div>
+                                <div class="brand-details">
+                                    <h2 id="brandTitle">Marka Seçin</h2>
+                                    <p class="brand-subtitle">Ürün Ekleme</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-header">
+                            <!-- <h3 id="formTitle">
+                                <i class="fas fa-plus-circle"></i>
+                                Yeni Ürün Ekle
+                            </h3> -->
+                        </div>
+                        
+                        <form id="productForm">
+                            <input type="hidden" id="editProductId" value="">
+                            <input type="hidden" id="selectedBrand" value="">
+                            
+
+                            
+                            <!-- Basic Product Info -->
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-info-circle"></i>
+                                    Temel Bilgiler
+                                </h4>
+                                <div class="form-row">
+                                    <div class="form-group full-width">
+                                        <label for="productName">Ürün Adı *</label>
+                                        <small class="field-hint">Ürünün tam adını yazın (örn: Earl Grey Çayı, Osmancık Pirinç)</small>
+                                        <input type="text" id="productName" required placeholder="Doğuş Earl Grey Çayı">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="selectedCategory">Kategori *</label>
+                                        <small class="field-hint">Bu ürünün kategorisini seçin</small>
+                                        <select id="selectedCategory" required>
+                                            <option value="">Seçiniz</option>
+                                            <option value="caylar">Çaylar</option>
+                                            <option value="baklagil">Baklagil</option>
+                                            <option value="bakliyat">Bakliyat</option>
+                                            <option value="bulgur">Bulgur</option>
+                                            <option value="baharat">Baharat</option>
+                                            <option value="salca">Salça</option>
+                                            <option value="makarna">Makarna</option>
+                                            <option value="seker">Şeker</option>
+                                            <option value="yag">Yağ</option>
+                                            <option value="icecek">İçecek</option>
+                                            <option value="organik">Organik</option>
+                                            <option value="kuruyemis">Kuruyemiş</option>
+                                        </select>
+                                    </div>
+                                    <!-- Ürün türü alanı kaldırıldı -->
+                                </div>
+                            </div>
+
+                            
+                            <!-- Product Image Section -->
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-image"></i>
+                                    Ürün Görseli
+                                </h4>
+                                <div class="image-upload-container">
+                                    <div class="image-upload-options">
+                                        <div class="upload-option">
+                                            <label class="radio-option">
+                                                <input type="radio" name="imageInputType" value="url" checked>
+                                                <span class="radio-custom"></span>
+                                                <div class="option-content">
+                                                    <i class="fas fa-link"></i>
+                                                    <span>URL ile Ekle</span>
+                                                </div>
+                                            </label>
+                                            <input type="url" id="productImage" placeholder="https://example.com/urun-resmi.jpg" class="url-input">
+                                        </div>
+                                        
+                                        <div class="upload-option">
+                                            <label class="radio-option">
+                                                <input type="radio" name="imageInputType" value="file">
+                                                <span class="radio-custom"></span>
+                                                <div class="option-content">
+                                                    <i class="fas fa-upload"></i>
+                                                    <span>Dosya Yükle</span>
+                                                </div>
+                                            </label>
+                                            <input type="file" id="productImageFile" accept="image/*" style="display: none;">
+                                            <button type="button" id="selectFileBtn" class="file-upload-btn" style="display: none;">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                Dosya Seç
+                                            </button>
+                                            <span id="selectedFileName" class="file-name"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="image-preview-container" id="imagePreview" style="display: none;">
+                                        <div class="image-preview">
+                                            <img id="previewImg" src="" alt="Ürün Resmi Önizleme">
+                                            <button type="button" id="removeImageBtn" class="remove-btn">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product Description -->
+                            <div class="form-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-align-left"></i>
+                                    Ürün Açıklaması
+                                </h4>
+                                <div class="form-group full-width">
+                                    <label for="productDescription">Detaylı Açıklama *</label>
+                                    <small class="field-hint">Ürünün özelliklerini, faydalarını ve kullanım alanlarını detaylı olarak yazın</small>
+                                    <div class="textarea-container">
+                                        <textarea id="productDescription" rows="5" required placeholder="Bu çay, Ceylon'un yüksek dağlarından toplanan seçkin çay yapraklarından üretilmiştir. Bergamot aroması ile zenginleştirilmiş olan Earl Grey çayı, sabah ve öğleden sonra içilebilecek hafif ve ferahlatıcı bir çaydır..."></textarea>
+                                        <div class="char-counter">
+                                            <span id="charCount">0</span> karakter
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Optional Information -->
+                            <div class="form-section optional-section">
+                                <h4 class="section-title">
+                                    <i class="fas fa-cog"></i>
+                                    İsteğe Bağlı Bilgiler
+                                    <small class="section-subtitle">Bu bilgiler daha sonra da eklenebilir</small>
+                                </h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="productPrice">Satış Fiyatı (₺)</label>
+                                        <small class="field-hint">Ürünün satış fiyatını TL cinsinden girin</small>
+                                        <div class="price-input">
+                                            <span class="currency-symbol">₺</span>
+                                            <input type="number" id="productPrice" min="0" step="0.01" placeholder="25.50">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productStock">Stok Miktarı</label>
+                                        <small class="field-hint">Depodaki ürün adedi (adet cinsinden)</small>
+                                        <div class="stock-input">
+                                            <input type="number" id="productStock" min="0" placeholder="100" value="0">
+                                            <span class="unit-label">adet</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary btn-large">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span id="submitBtnText">Ürünü Kaydet</span>
+                                </button>
+                                <button type="button" class="btn-secondary btn-large" onclick="resetForm()">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Geri Dön
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Categories Tab -->
+                <section id="categories-tab" class="tab-content">
+                    <div class="categories-container">
+                        <h3>Kategori Yönetimi</h3>
+                        <div class="categories-grid" id="categoriesGrid">
+                            <!-- Categories will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Export Tab -->
+                <section id="export-tab" class="tab-content">
+                    <div class="export-container">
+                        <div class="export-section">
+                            <h3>Veri Dışa Aktarma</h3>
+                            <p>Mevcut ürün verilerini JSON formatında indirin.</p>
+                            <button class="btn-primary" onclick="exportData()">
+                                <i class="fas fa-download"></i>
+                                JSON İndir
+                            </button>
+                        </div>
+                        <div class="export-section">
+                            <h3>Veri İçe Aktarma</h3>
+                            <p>JSON dosyasından ürün verilerini yükleyin.</p>
+                            <input type="file" id="importFile" accept=".json" style="display: none;">
+                            <button class="btn-secondary" onclick="importData()">
+                                <i class="fas fa-upload"></i>
+                                JSON Yükle
+                            </button>
+                        </div>
+                        <div class="export-section">
+                            <h3>Yedekleme</h3>
+                            <p>Son güncelleme: <span id="lastBackup">Henüz yedek alınmamış</span></p>
+                            <button class="btn-success" onclick="createBackup()">
+                                <i class="fas fa-shield-alt"></i>
+                                Yedek Oluştur
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Emin misiniz?</h3>
+            <p id="confirmMessage">Bu işlemi gerçekleştirmek istediğinizden emin misiniz?</p>
+            <div class="modal-actions">
+                <button class="btn-danger" id="confirmYes">Evet</button>
+                <button class="btn-secondary" id="confirmNo">Hayır</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- JavaScript -->
+    <script type="module" src="./assets/admin/admin.js"></script>
+</body>
+</html> 

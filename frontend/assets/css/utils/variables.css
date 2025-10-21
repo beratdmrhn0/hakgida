@@ -1,0 +1,175 @@
+/* Color Variables - Professional Theme */
+:root {
+    /* Primary Colors - Refined Blue Palette */
+    --primary-color: #ffffff;
+    --primary-dark: #0066CC;
+    --primary-light: #E6F3FF;
+    --primary-hover: #0052A3;
+    --accent-color: #0099CC;
+    --accent-light: #CCE6FF;
+    
+    /* Secondary Colors - Refined Orange/Red Palette */
+    --secondary-color: #D47800;  /* Professional orange */
+    --secondary-dark: #B8660A;
+    --secondary-light: #FFE6CC;
+    --secondary-hover: #FF8533;
+    
+    /* Background Colors - Clean and Professional */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8F9FA;
+    --bg-tertiary: #E9ECEF;
+    --bg-quaternary: #DEE2E6;
+    --bg-dark: #212529;
+    --bg-dark-secondary: #343A40;
+    
+    /* Text Colors - High Contrast for Readability */
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6C757D;
+    --text-light: #ADB5BD;
+    --text-white: #FFFFFF;
+    
+    /* Border Colors */
+    --border-primary: #DEE2E6;
+    --border-secondary: #CED4DA;
+    --border-light: #F1F3F4;
+    
+    /* Status Colors */
+    --success-color: #28A745;
+    --success-light: #D4EDDA;
+    --warning-color: #FFC107;
+    --warning-light: #FFF3CD;
+    --danger-color: #DC3545;
+    --danger-light: #F8D7DA;
+    --info-color: #17A2B8;
+    --info-light: #D1ECF1;
+    
+    /* Category Colors - More Professional */
+    --category-caylar: #28A745;      /* Green for teas */
+    --category-baklagil: #DC3545;    /* Red for legumes */
+    --category-baharat: #FD7E14;     /* Orange for spices */
+    --category-organik: #6F42C1;     /* Purple for organic */
+    --category-kuruyemis: #795548;   /* Brown for nuts */
+    
+    /* Gradient Colors */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    --gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-hover) 100%);
+    --gradient-hero: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    
+    /* Product Image Backgrounds */
+    --product-image-bg: #FFFFFF;
+    --product-detail-image-bg: #F8F9FA;
+    --product-related-image-bg: #F8F9FA;
+    
+    /* Typography */
+    --font-family: '','','';
+    --font-family-heading: '','','';
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1.275rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 3rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    --font-size-6xl: 3.75rem;
+    
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    
+    /* Spacing - More refined scale */
+    --spacing-xs: 1.5rem;    /* 4px */
+    --spacing-sm: 2rem;     /* 8px */
+    --spacing-md: 2rem;       /* 16px */
+    --spacing-lg: 1.5rem;     /* 24px */
+    --spacing-xl: 2rem;       /* 32px */
+    --spacing-2xl: 3rem;      /* 48px */
+    --spacing-3xl: 4rem;      /* 64px */
+    --spacing-4xl: 5rem;      /* 80px */
+    --spacing-5xl: 6rem;      /* 96px */
+    
+    /* Border Radius - Modern and Clean */
+    --radius-none: 0;
+    --radius-sm: 0.25rem;     /* 4px */
+    --radius-md: 0.5rem;      /* 8px */
+    --radius-lg: 0.75rem;     /* 12px */
+    --radius-xl: 1rem;        /* 16px */
+    --radius-2xl: 1.5rem;     /* 24px */
+    --radius-full: 50%;
+    --radius-pill: 9999px;
+    
+    /* Shadows - Professional depth */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    
+    /* Transitions - Smooth and Professional */
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+    --transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Z-index Scale */
+    --z-base: 0;
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+    --z-toast: 1080;
+    
+    /* Breakpoints */
+    --breakpoint-xs: 475px;
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    
+    /* Container */
+    --container-max-width: 1280px;
+    --container-padding: 1.5rem;
+    --container-padding-sm: 1rem;
+}
+
+/* Dark Theme Support (Optional) */
+.dark-theme {
+    --bg-primary: #0F1419;
+    --bg-secondary: #1A202C;
+    --bg-tertiary: #2D3748;
+    --bg-quaternary: #4A5568;
+    
+    --text-primary: #F7FAFC;
+    --text-secondary: #E2E8F0;
+    --text-muted: #A0AEC0;
+    --text-light: #718096;
+    
+    --border-primary: #4A5568;
+    --border-secondary: #2D3748;
+    --border-light: #1A202C;
+    
+    --product-image-bg: #2D3748;
+    --product-detail-image-bg: #1A202C;
+    --product-related-image-bg: #1A202C;
+}
+
+/* High Contrast Theme (Accessibility) */
+.high-contrast {
+    --primary-color: #000000;
+    --primary-dark: #000000;
+    --secondary-color: #FFFF00;
+    --bg-primary: #FFFFFF;
+    --text-primary: #000000;
+    --border-primary: #000000;
+} 

@@ -1,0 +1,43 @@
+{
+  "name": "hakgida-frontend",
+  "version": "1.0.0",
+  "description": "Hakgida Frontend - Modern promotional website",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --host=localhost --open=/index.html",
+    "dev": "live-server --port=3000 --host=localhost --open=/index.html --watch=assets/",
+    "admin": "live-server --port=3000 --host=localhost --open=/admin.html",
+    "products": "live-server --port=3000 --host=localhost --open=/products.html",
+    "build": "echo 'Static files - no build step required'",
+    "serve": "http-server -p 3000 -o",
+    "lint": "echo 'No linting configured yet'",
+    "test": "echo 'No tests configured yet'"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "javascript",
+    "promotional-website",
+    "hakgida",
+    "frontend"
+  ],
+  "author": "Hakgida Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beratdmrhn0/hakgida.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beratdmrhn0/hakgida/issues"
+  },
+  "homepage": "https://hakgida.com"
+} 

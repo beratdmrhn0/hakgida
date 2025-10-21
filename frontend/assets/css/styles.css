@@ -1,0 +1,30 @@
+/* Hakgida Tanıtım Sitesi - Ana CSS Dosyası */
+
+/* Google Fonts - Professional Inter Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
+/* Utilities */
+@import url('./utils/variables.css');
+@import url('./utils/base.css');
+@import url('./utils/responsive.css');
+
+/* Components */
+@import url('./components/navbar.css');
+@import url('./components/hero.css');
+@import url('./components/carousel.css');
+@import url('./components/partnerships.css');
+@import url('./components/products.css');
+@import url('./components/modal.css');
+@import url('./components/about.css');
+@import url('./components/contact.css');
+@import url('./components/footer.css');
+
+/* New Page Components */
+@import url('./components/page-header.css');
+@import url('./components/breadcrumb.css');
+@import url('./components/product-detail.css');
+@import url('./components/related-products.css');
+@import url('./components/products-filter.css'); 
