@@ -3,15 +3,12 @@ export const CATEGORIES = [
   { key: 'caylar', name: 'Çaylar', icon: 'Leaf', color: '#27ae60' },
   { key: 'baklagil', name: 'Baklagil', icon: 'Sprout', color: '#e74c3c' },
   { key: 'bakliyat', name: 'Bakliyat', icon: 'Sprout', color: '#8b4513' },
-  { key: 'bulgur', name: 'Bulgur', icon: 'Wheat', color: '#daa520' },
   { key: 'baharat', name: 'Baharat', icon: 'Flame', color: '#f39c12' },
   { key: 'salca', name: 'Salça', icon: 'Droplet', color: '#dc2626' },
   { key: 'makarna', name: 'Makarna', icon: 'UtensilsCrossed', color: '#fbbf24' },
   { key: 'seker', name: 'Şeker', icon: 'Cube', color: '#f8fafc' },
   { key: 'yag', name: 'Yağ', icon: 'Droplets', color: '#fcd34d' },
   { key: 'icecek', name: 'İçecek', icon: 'Wine', color: '#06b6d4' },
-  { key: 'organik', name: 'Organik', icon: 'Flower2', color: '#8e44ad' },
-  { key: 'kuruyemis', name: 'Kuruyemiş', icon: 'Apple', color: '#795548' },
 ] as const;
 
 // Brand Logos
@@ -27,7 +24,7 @@ export const BRAND_LOGOS = [
   { name: 'Çağdaş Bulgur', logo: '/assets/images/cagdas-bulgur.png' },
   { name: 'Turna', logo: '/assets/images/turna-logo.png' },
   { name: 'MGS', logo: '/assets/images/mgs-logo.jpg' },
-  { name: 'Ermiş', logo: '/assets/images/ermis_logo.jpg' },
+  { name: 'ER MİS', logo: '/assets/images/ermis_logo.jpg' },
 ] as const;
 
 // Brand Names for Dropdown

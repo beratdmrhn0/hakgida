@@ -21,15 +21,12 @@ async function seedCategories() {
         { key: 'caylar', name: 'Çaylar', icon: 'fas fa-leaf', color: '#27ae60' },
         { key: 'baklagil', name: 'Baklagil', icon: 'fas fa-seedling', color: '#e74c3c' },
         { key: 'bakliyat', name: 'Bakliyat', icon: 'fas fa-seedling', color: '#8b4513' },
-        { key: 'bulgur', name: 'Bulgur', icon: 'fas fa-wheat-awn', color: '#daa520' },
         { key: 'baharat', name: 'Baharat', icon: 'fas fa-pepper-hot', color: '#f39c12' },
         { key: 'salca', name: 'Salça', icon: 'fas fa-bottle-droplet', color: '#dc2626' },
         { key: 'makarna', name: 'Makarna', icon: 'fas fa-utensils', color: '#fbbf24' },
         { key: 'seker', name: 'Şeker', icon: 'fas fa-cube', color: '#f8fafc' },
         { key: 'yag', name: 'Yağ', icon: 'fas fa-oil-can', color: '#fcd34d' },
-        { key: 'icecek', name: 'İçecek', icon: 'fas fa-bottle-water', color: '#06b6d4' },
-        { key: 'organik', name: 'Organik', icon: 'fas fa-spa', color: '#8e44ad' },
-        { key: 'kuruyemis', name: 'Kuruyemiş', icon: 'fas fa-apple-alt', color: '#795548' }
+        { key: 'icecek', name: 'İçecek', icon: 'fas fa-bottle-water', color: '#06b6d4' }
     ];
 
     for (const categoryData of categories) {

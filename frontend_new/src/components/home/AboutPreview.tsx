@@ -25,8 +25,8 @@ const AboutPreview = () => {
               İnovatif yaklaşımımız ve geleneksel lezzetlerimizle müşteri memnuniyetini ön planda tutmaktayız.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Modern üretim tesislerimizde çay üretiminden baharat ve baklagil ürünlerine kadar 
-              geniş bir yelpazede kaliteli ürünler sunarak sofralarınıza değer katıyoruz.
+              Modern üretim tesislerimizde baklagil ürünlerinin üretimini yapıp kaliteli ürünlerin 
+              toptan satış yapmaktayız. 
             </p>
             <div className="pt-4">
               <Link
