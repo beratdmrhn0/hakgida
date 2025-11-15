@@ -1,16 +1,16 @@
 // Product Types
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
   category: string;
   brand?: string;
   type?: string;
-  price?: number;
+  price?: number | null;
   unit?: string;
   description: string;
   image?: string;
   imageUrl?: string;
-  stock?: number;
+  stock?: number | null;
   isActive?: boolean;
   created_at?: string;
   updated_at?: string;

@@ -2,27 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { authService } from '../../services/authService';
 import { BRAND_NAMES } from '../../utils/constants';
+import type { Product, Category } from '../../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
-
-interface Product {
-  id?: number;
-  name: string;
-  brand: string;
-  category: string;
-  price: number | null;
-  unit: string;
-  description: string;
-  imageUrl: string;
-  image?: string;
-  stock: number | null;
-  isActive: boolean;
-}
-
-interface Category {
-  key: string;
-  name: string;
-}
 
 interface Props {
   product: Product | null;
@@ -31,16 +13,18 @@ interface Props {
 }
 
 const ProductFormModal = ({ product, onClose, categories }: Props) => {
-  const [formData, setFormData] = useState<Product>({
-    name: '',
-    brand: '',
-    category: '',
-    price: null,
-    unit: 'kg',
-    description: '',
-    imageUrl: '',
-    stock: null,
-    isActive: true,
+  const [formData, setFormData] = useState<Partial<Product> & { name: string; description: string; category: string }>({
+    id: product?.id,
+    name: product?.name || '',
+    brand: product?.brand || '',
+    category: product?.category || '',
+    price: product?.price ?? null,
+    unit: product?.unit || 'kg',
+    description: product?.description || '',
+    imageUrl: product?.imageUrl || product?.image || '',
+    image: product?.image,
+    stock: product?.stock ?? null,
+    isActive: product?.isActive ?? true,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -49,7 +33,22 @@ const ProductFormModal = ({ product, onClose, categories }: Props) => {
 
   useEffect(() => {
     if (product) {
-      setFormData(product);
+      setFormData({
+        id: product.id,
+        name: product.name,
+        brand: product.brand || '',
+        category: product.category,
+        price: product.price ?? null,
+        unit: product.unit || 'kg',
+        description: product.description,
+        imageUrl: product.imageUrl || product.image || '',
+        image: product.image,
+        stock: product.stock ?? null,
+        isActive: product.isActive ?? true,
+      });
+      if (product.imageUrl || product.image) {
+        setImagePreview(product.imageUrl || product.image || '');
+      }
     }
   }, [product]);
 

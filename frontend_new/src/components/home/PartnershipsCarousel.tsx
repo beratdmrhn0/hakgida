@@ -18,13 +18,11 @@ const partners = [
 const PartnershipsCarousel = () => {
   const trackRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [scrollAmount, setScrollAmount] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const itemWidth = 192; // w-40 + gap-8 = 160 + 32 = 192px
-  const visibleItems = 4; // Görünür item sayısı
 
   useEffect(() => {
     if (!isAutoScrolling) return;
@@ -92,11 +90,12 @@ const PartnershipsCarousel = () => {
 
   const scrollLeft = () => {
     setIsAutoScrolling(false);
-    setCurrentIndex(prev => {
-      const newIndex = prev > 0 ? prev - 1 : partners.length - visibleItems;
-      smoothScrollTo(newIndex * itemWidth);
-      return newIndex;
-    });
+    const track = trackRef.current;
+    if (!track) return;
+    
+    const currentScroll = scrollAmount;
+    const newScroll = Math.max(0, currentScroll - itemWidth);
+    smoothScrollTo(newScroll);
     
     // 3 saniye sonra otomatik kaydırmaya devam et
     setTimeout(() => setIsAutoScrolling(true), 3000);
@@ -104,11 +103,13 @@ const PartnershipsCarousel = () => {
 
   const scrollRight = () => {
     setIsAutoScrolling(false);
-    setCurrentIndex(prev => {
-      const newIndex = prev < partners.length - visibleItems ? prev + 1 : 0;
-      smoothScrollTo(newIndex * itemWidth);
-      return newIndex;
-    });
+    const track = trackRef.current;
+    if (!track) return;
+    
+    const currentScroll = scrollAmount;
+    const maxScroll = track.scrollWidth / 2;
+    const newScroll = currentScroll + itemWidth >= maxScroll ? 0 : currentScroll + itemWidth;
+    smoothScrollTo(newScroll);
     
     // 3 saniye sonra otomatik kaydırmaya devam et
     setTimeout(() => setIsAutoScrolling(true), 3000);

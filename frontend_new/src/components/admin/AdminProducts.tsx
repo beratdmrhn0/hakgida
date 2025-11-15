@@ -39,13 +39,13 @@ const AdminProducts = () => {
   const categories = categoriesData?.data || [];
   const products = data?.data || [];
 
-  const handleEdit = (product: Product) => {
+  const handleEdit = (product: Product & { id: number }) => {
     setEditingProduct(product);
     setIsModalOpen(true);
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Bu ürünü silmek istediğinizden emin misiniz?')) return;
+  const handleDelete = async (id: number | undefined) => {
+    if (!id || !confirm('Bu ürünü silmek istediğinizden emin misiniz?')) return;
 
     try {
       await axios.delete(`${API_URL}/products/${id}`, {
@@ -58,11 +58,11 @@ const AdminProducts = () => {
     }
   };
 
-  const handleToggleActive = async (product: Product) => {
+  const handleToggleActive = async (product: Product & { id: number }) => {
     try {
       await axios.put(
         `${API_URL}/products/${product.id}`,
-        { ...product, isActive: !product.isActive },
+        { ...product, isActive: !(product.isActive ?? true) },
         { headers: authService.getAuthHeader() }
       );
       refetch();
@@ -182,7 +182,7 @@ const AdminProducts = () => {
                       {product.price !== null && product.price !== undefined ? (
                         <>
                           ₺{product.price.toFixed(2)}
-                          <span className="text-xs text-gray-500 ml-1">/ {product.unit}</span>
+                          {product.unit && <span className="text-xs text-gray-500 ml-1">/ {product.unit}</span>}
                         </>
                       ) : (
                         <span className="text-gray-400 text-xs">Fiyat yok</span>
@@ -194,33 +194,43 @@ const AdminProducts = () => {
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => handleToggleActive(product)}
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          product.isActive
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}
-                      >
-                        {product.isActive ? 'Aktif' : 'Pasif'}
-                      </button>
+                      {product.id ? (
+                        <button
+                          onClick={() => handleToggleActive(product as Product & { id: number })}
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            product.isActive ?? true
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {product.isActive ?? true ? 'Aktif' : 'Pasif'}
+                        </button>
+                      ) : (
+                        <span className="text-gray-400 text-xs">-</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleEdit(product)}
-                          className="text-blue-600 hover:text-blue-800"
-                          title="Düzenle"
-                        >
-                          <i className="fas fa-edit"></i>
-                        </button>
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="text-red-600 hover:text-red-800"
-                          title="Sil"
-                        >
-                          <i className="fas fa-trash"></i>
-                        </button>
+                        {product.id ? (
+                          <>
+                            <button
+                              onClick={() => handleEdit(product as Product & { id: number })}
+                              className="text-blue-600 hover:text-blue-800"
+                              title="Düzenle"
+                            >
+                              <i className="fas fa-edit"></i>
+                            </button>
+                            <button
+                              onClick={() => handleDelete(product.id)}
+                              className="text-red-600 hover:text-red-800"
+                              title="Sil"
+                            >
+                              <i className="fas fa-trash"></i>
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 text-xs">-</span>
+                        )}
                       </div>
                     </td>
                   </tr>
