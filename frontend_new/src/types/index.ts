@@ -6,9 +6,12 @@ export interface Product {
   brand?: string;
   type?: string;
   price?: number;
+  unit?: string;
   description: string;
   image?: string;
+  imageUrl?: string;
   stock?: number;
+  isActive?: boolean;
   created_at?: string;
   updated_at?: string;
 }

@@ -11,14 +11,15 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 interface Product {
   id: number;
   name: string;
-  brand: string;
+  brand?: string;
   category: string;
-  price: number;
-  unit: string;
+  price?: number;
+  unit?: string;
   description: string;
-  imageUrl: string;
-  stock: number;
-  isActive: boolean;
+  imageUrl?: string;
+  image?: string;
+  stock?: number;
+  isActive?: boolean;
 }
 
 const AdminProducts = () => {
