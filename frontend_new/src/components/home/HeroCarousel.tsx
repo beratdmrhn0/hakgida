@@ -102,7 +102,8 @@ const HeroCarousel = () => {
         >
           {/* Background Image */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-black/40 z-10"></div>
+            {/* İlk slide için overlay yok, diğerleri için var */}
+            {index !== 0 && <div className="absolute inset-0 bg-black/40 z-10"></div>}
             <img
               src={slide.image}
               alt={slide.title}
