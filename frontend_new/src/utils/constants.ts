@@ -57,22 +57,22 @@ export const COMPANY_INFO = {
 // Carousel Images
 export const CAROUSEL_IMAGES = [
   {
-    image: '/assets/images/harfece-kalbak-ürün-resimleri.png',
+    image: '/assets/images/harfece-kalbak-urun-resimleri.png',
     title: '',
     subtitle: '',
     description: '',
   },
   {
     image: '/assets/images/çaykur/resim3.jpg',
-    title: 'İnovasyonu Benimseyen, Kaliteyi Yaşayan',
-    subtitle: 'Modern Teknoloji, Geleneksel Lezzet',
-    description: 'Uzun yıllardır edindiğimiz tecrübe ve son teknoloji ile donatılmış tesislerimizde en kaliteli ürünleri sizlere sunuyoruz.',
+    title: 'Toptan Gıda Tedarik',
+    subtitle: 'Güvenilir İş Ortağınız',
+    description: 'Geniş ürün yelpazesi ile işletmenizin gıda ihtiyaçlarını karşılıyoruz.',
   },
   {
     image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-    title: 'Doğanın En Taze Lezzetleri',
-    subtitle: 'Organik ve Doğal Ürünler',
-    description: 'Baharat, kuruyemiş ve organik ürünlerimizle sofranıza lezzet katıyoruz.',
+    title: 'Seçkin Markalarla Çalışıyoruz',
+    subtitle: 'Kaliteli Ürün Yelpazesi',
+    description: 'Çaykur, Beypazarı, Türk Şeker gibi köklü markalarla birlikte, kendi üretimimiz Harfece ve Kalbak bakliyat ürünleri.',
   },
 ] as const;
 
