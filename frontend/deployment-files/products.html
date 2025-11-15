@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürünlerimiz - Hakgida</title>
+    <meta name="description" content="Hakgida kaliteli çay, baklagil, baharat ve organik ürünlerini keşfedin. Doğal ve taze ürünler.">
+    <meta name="keywords" content="çay, baklagil, baharat, organik, gıda, doğal ürünler, hakgida ürünleri">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Configuration -->
+    <script src="./config.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="logo">
+                    <div class="logo-text-container">
+                        <div class="logo-text">HAK</div>
+                        <div class="logo-text">GIDA</div>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="products.html" class="nav-link active">Ürünler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#contact" class="nav-link">İletişim</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Ürünlerimiz</h1>
+            <p>Kaliteli ve doğal ürün seçeneklerimizi keşfedin</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <!-- Selected Brand Indicator -->
+            <div id="brandIndicator" class="brand-indicator">
+                <i class="fas fa-tag"></i>
+                <span class="brand-indicator-label">Seçilen Marka:</span>
+                <span id="brandIndicatorName" class="brand-indicator-name"></span>
+                <button class="brand-indicator-close" onclick="window.location.href='products.html'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Grid Layout: Sidebar + Grid -->
+            <div class="products-layout">
+            <aside class="products-sidebar">
+                <!-- Search and Filter -->
+                <div class="products-filter">
+
+
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Ürün ara..." autocomplete="off">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <!-- Product Categories (Collapsible) -->
+                <div class="categories-filter">
+                    <button class="categories-toggle" id="categoriesToggle" aria-expanded="false" aria-controls="categoriesPanel">
+                        <span class="categories-toggle-left">
+                            <i class="fas fa-th-list"></i>
+                            <strong>Kategoriler</strong>
+                        </span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="categories-panel" id="categoriesPanel" hidden>
+                        <div class="product-categories">
+                            <button class="category-btn active" data-category="all">Tümü</button>
+                            <button class="category-btn" data-category="caylar">Çaylar</button>
+                            <button class="category-btn" data-category="baklagil">Baklagil</button>
+                            <button class="category-btn" data-category="bakliyat">Bakliyat</button>
+                            <button class="category-btn" data-category="bulgur">Bulgur</button>
+                            <button class="category-btn" data-category="baharat">Baharat</button>
+                            <button class="category-btn" data-category="salca">Salça</button>
+                            <button class="category-btn" data-category="makarna">Makarna</button>
+                            <button class="category-btn" data-category="seker">Şeker</button>
+                            <button class="category-btn" data-category="yag">Yağ</button>
+                            <button class="category-btn" data-category="icecek">İçecek</button>
+                            <button class="category-btn" data-category="organik">Organik</button>
+                            <button class="category-btn" data-category="kuruyemis">Kuruyemiş</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Filter (Collapsible) -->
+                <div class="brands-filter">
+                    <button class="brands-toggle" id="brandsToggle" aria-expanded="false" aria-controls="brandsPanel">
+                        <span class="brands-toggle-left">
+                            <i class="fas fa-industry"></i>
+                            <strong>Markalar</strong>
+                        </span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </button>
+                    <div class="brands-panel" id="brandsPanel" hidden>
+                        <!-- Tümü -->
+                        <div class="brands-list">
+                            <button class="brand-item" data-brand="" title="Tüm Markalar">
+                                <span class="brand-label">Tümü</span>
+                            </button>
+                        </div>
+
+                        <!-- Kendi Ürünlerimiz -->
+                        <div class="brands-group">
+                            <div class="brands-group-title"><i class="fas fa-store"></i> Kendi Ürünlerimiz</div>
+                            <div class="brands-list">
+                                <button class="brand-item" data-brand="harfece-bakliyat" title="Harfece Bakliyat">
+                                    <img class="brand-logo" src="assets/images/harfece.png" alt="Harfece Bakliyat"> <span>Harfece</span>
+                                </button>
+                                <button class="brand-item" data-brand="kalbak-bakliyat" title="Kalbak Bakliyat">
+                                    <img class="brand-logo" src="assets/images/kalbak.png" alt="Kalbak Bakliyat"> <span>Kalbak</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- İş Birliklerimiz -->
+                        <div class="brands-group">
+                            <div class="brands-group-title"><i class="fas fa-handshake"></i> İş Birliklerimiz</div>
+                            <div class="brands-list">
+                                <button class="brand-item" data-brand="mert-kup-seker" title="Mert Küp Şeker">
+                                    <img class="brand-logo" src="assets/images/mgs-logo.jpg" alt="Mert Küp Şeker"> <span>Mert Küp Şeker</span>
+                                </button>
+                                <button class="brand-item" data-brand="turna-yag" title="Turna Yağ">
+                                    <img class="brand-logo" src="assets/images/turna-logo.png" alt="Turna Yağ"> <span>Turna</span>
+                                </button>
+                                <button class="brand-item" data-brand="cagdas-bulgur" title="Çağdaş Bulgur">
+                                    <img class="brand-logo" src="assets/images/cagdas-bulgur.png" alt="Çağdaş Bulgur"> <span>Çağdaş Bulgur</span>
+                                </button>
+                                <button class="brand-item" data-brand="arbel-bulgur" title="Arbel Bulgur">
+                                    <img class="brand-logo" src="assets/images/arbel-bulgur-bakliyat.png" alt="Arbel Bulgur"> <span>Arbel</span>
+                                </button>
+                                <button class="brand-item" data-brand="turkiye-seker" title="Türkiye Şeker Fabrikaları">
+                                    <img class="brand-logo" src="assets/images/turkseker-logo.webp" alt="Türkiye Şeker Fabrikaları"> <span>Türkşeker</span>
+                                </button>
+                                <button class="brand-item" data-brand="er-mis-salca" title="Er Mis Salça">
+                                    <img class="brand-logo" src="assets/images/ermis_logo.jpg" alt="Er Mis Salça"> <span>Er Mis</span>
+                                </button>
+                                <button class="brand-item" data-brand="ovella-makarna" title="Ovella Makarna">
+                                    <img class="brand-logo" src="assets/images/ova-makarna.png" alt="Ovella Makarna"> <span>Ovella</span>
+                                </button>
+                                <button class="brand-item" data-brand="beypazari" title="Beypazarı">
+                                    <img class="brand-logo" src="assets/images/beypazarı.png" alt="Beypazarı"> <span>Beypazarı</span>
+                                </button>
+                                <button class="brand-item" data-brand="caykur" title="Çaykur">
+                                    <img class="brand-logo" src="assets/images/caykur-logo.png" alt="Çaykur"> <span>Çaykur</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </aside>
+            <section class="products-content">
+                <div class="products-grid" id="productsGrid">
+                    <div class="loading">Ürünler yükleniyor...</div>
+                </div>
+                <div id="pagination" class="pagination"></div>
+            </section>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section company-info">
+                    <div class="footer-logo"><img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="footer-logo-img"></div>
+                    <p>Modern teknoloji ve geleneksel lezzetleri bir araya getirerek en kaliteli ürünleri sunuyoruz.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ürün Kategorileri</h3>
+                    <ul>
+                        <li><a href="products.html?category=caylar">Çaylar</a></li>
+                        <li><a href="products.html?category=bakliyat">Bakliyat</a></li>
+                        <li><a href="products.html?category=bulgur">Bulgur</a></li>
+                        <li><a href="products.html?category=baharat">Baharat</a></li>
+                        <li><a href="products.html?category=salca">Salça</a></li>
+                        <li><a href="products.html?category=makarna">Makarna</a></li>
+                        <li><a href="products.html?category=seker">Şeker</a></li>
+                        <li><a href="products.html?category=yag">Yağ</a></li>
+                        <li><a href="products.html?category=icecek">İçecek</a></li>
+                        <li><a href="products.html?category=organik">Organik</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kurumsal</h3>
+                    <ul>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                        <li><a href="index.html#contact">İletişim</a></li>
+                        <li><a href="products.html">Ürünlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Kırıkhan/Hatay</p>
+                    <p><i class="fas fa-phone"></i> +90 533 290 79 94</p>
+                    <p><i class="fas fa-envelope"></i> info@hakgida.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hakgida. Tüm hakları saklıdır. | <a href="gizlilik-politikasi.html">Gizlilik Politikası</a> | <a href="kalite-politikamiz.html">Kalite Politikası</a> | <a href="kvkk-metni.html">KVKK Metni</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="./assets/js/products.js"></script>
+</body>
+</html> 

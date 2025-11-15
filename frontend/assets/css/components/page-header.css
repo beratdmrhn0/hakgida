@@ -1,0 +1,118 @@
+/* Page Header Styles - Professional Theme */
+.page-header {
+    background: linear-gradient(135deg, #d47800 0%, #d47800 100%);
+    color: #FFFFFF !important;
+    padding: var(--spacing-md) 0 var(--spacing-lg); /* Daha küçük padding */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: calc(20px + var(--spacing-sm)); /* Ürünlerimiz boşluğunun kalınlığı*/
+    box-shadow: 
+        0 -10px 20px rgba(212, 120, 0, 0.15), /* Yukarı doğru yumuşak shadow */
+        0 40px 50px rgba(212, 120, 0, 0.2), /* Aşağı doğru shadow */
+        inset 0 1px 0 rgba(255, 255, 255, 0.1); /* İç highlight */
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
+    animation: shimmer 5s infinite;
+    z-index: 1;
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-header h1 {
+    font-size: var(--font-size-5xl); /* Biraz daha küçük */
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--spacing-sm); /* Daha küçük margin */
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF !important;
+    line-height: 1.1;
+}
+
+.page-header p {
+    font-size: var(--font-size-lg); /* Biraz daha küçük */
+    opacity: 0.95;
+    max-width: 500px; /* Daha dar */
+    margin: 0 auto;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+    font-weight: var(--font-weight-medium);
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .page-header {
+        padding: var(--spacing-lg) 0 var(--spacing-xl);
+        padding-top: calc(100px + var(--spacing-sm));
+    }
+    
+    .page-header h1 {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .page-header p {
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: var(--spacing-md) 0 var(--spacing-lg);
+        padding-top: calc(85px + var(--spacing-sm));
+    }
+    
+    .page-header h1 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .page-header p {
+        font-size: var(--font-size-sm);
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header {
+        padding: var(--spacing-sm) 0 var(--spacing-md);
+        padding-top: calc(75px + var(--spacing-xs));
+    }
+    
+    .page-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .page-header p {
+        font-size: var(--font-size-xs);
+    }
+} 

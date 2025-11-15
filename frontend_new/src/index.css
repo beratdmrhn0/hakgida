@@ -1,0 +1,128 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-[#D47800] text-white hover:bg-[#B8660A] focus:ring-[#D47800];
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500;
+  }
+
+  .btn-outline {
+    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-card overflow-hidden transition-all duration-300 hover:shadow-xl;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section Padding */
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  /* Heading Styles */
+  .heading-1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold font-display;
+  }
+
+  .heading-2 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold font-display;
+  }
+
+  .heading-3 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-semibold font-display;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  }
+
+  .input-error {
+    @apply border-red-500 focus:ring-red-500;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600;
+  }
+
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3b82f6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

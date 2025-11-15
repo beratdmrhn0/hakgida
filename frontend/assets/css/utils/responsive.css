@@ -1,0 +1,71 @@
+/* Responsive Utilities */
+
+/* Mobile First Approach */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .section {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .section-header h2 {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .d-md-none {
+        display: none !important;
+    }
+    
+    .d-md-block {
+        display: block !important;
+    }
+    
+    .text-md-center {
+        text-align: center !important;
+    }
+    
+    .flex-md-column {
+        flex-direction: column !important;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .d-lg-flex {
+        display: flex !important;
+    }
+    
+    .d-lg-none {
+        display: none !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .nav-actions,
+    .footer,
+    .btn,
+    .product-actions {
+        display: none !important;
+    }
+    
+    .hero {
+        background: none !important;
+        color: var(--dark-text) !important;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakgida - Kaliteli Çay ve Gıda Ürünleri</title>
+    <meta name="description" content="Hakgida - Doğal ve kaliteli çay, baklagil, baharat ve organik ürünler. Kaliteli gıda ürünleri.">
+    <meta name="keywords" content="çay, baklagil, baharat, organik, gıda, doğal ürünler, hakgida">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">
+                    <img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="logo">
+                    <div class="logo-text-container">
+                        <div class="logo-text">HAK</div>
+                        <div class="logo-text">GIDA</div>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="products.html" class="nav-link">Ürünler</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">İletişim</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel Section -->
+    <section id="home" class="hero-carousel">
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <!-- Slide 1 - Ana Tanıtım -->
+                <div class="carousel-slide active">
+                    <div class="slide-background">
+                        <div class="slide-overlay"></div>
+                        <img src="assets/images/harfece-kalbak-ürün-resimleri.png" alt="Harfece Kalbak Kapak" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                        <div class="container">
+                            <!-- Yazılar kaldırıldı - sadece ürün görseli görünecek -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 - Fabrika -->
+                <div class="carousel-slide">
+                    <div class="slide-background">
+                        <div class="slide-overlay"></div>
+                        <img src="assets/images/çaykur/resim3.jpg" alt="Modern Üretim Tesisi" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                        <div class="container">
+                            <div class="slide-text">
+                                <h2 class="slide-title">İnovasyonu Benimseyen, Kaliteyi Yaşayan</h2>
+                                <p class="slide-subtitle">Modern Teknoloji, Geleneksel Lezzet</p>
+                                <p class="slide-description">
+                                    Uzun yıllardır edindiğimiz tecrübe ve son teknoloji ile donatılmış 
+                                    tesislerimizde en kaliteli ürünleri sizlere sunuyoruz.
+                                </p>
+                                <div class="slide-buttons">
+                                    <a href="about.html" class="btn btn-primary">Keşfet</a>
+                                    <a href="products.html" class="btn btn-secondary">Ürünlerimiz</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 - Kurugıda -->
+                <div class="carousel-slide">
+                    <div class="slide-background">
+                        <div class="slide-overlay"></div>
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Baharat ve Gıda Ürünleri" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                        <div class="container">
+                            <div class="slide-text">
+                                <h2 class="slide-title">Çeşitlilik Mükemmelliği, Kalite Güvencesi</h2>
+                                <p class="slide-subtitle">Geniş Ürün Yelpazesi, Tek Kalite Standardı</p>
+                                <p class="slide-description">
+                                    50'den fazla çeşit ürünümüzle mutfağınıza değer katıyoruz. 
+                                    Her ürünümüzde aynı kalite anlayışı ve mükemmellik arayışı.
+                                </p>
+                                <div class="slide-buttons">
+                                    <a href="products.html" class="btn btn-primary">Tüm Ürünler</a>
+                                    <a href="products.html?category=organik" class="btn btn-secondary">Organik Ürünler</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 4 - Çay Bahçeleri -->
+                <div class="carousel-slide">
+                    <div class="slide-background">
+                        <div class="slide-overlay"></div>
+                        <img src="assets/images/çaykur/resim1.jpg" alt="Çay Bahçeleri" class="slide-image">
+                    </div>
+                    <div class="slide-content">
+                        <div class="container">
+                            <div class="slide-text">
+                                <h2 class="slide-title">Doğanın Gücü, Teknolojinin Avantajı</h2>
+                                <p class="slide-subtitle">Karadeniz'den Sofralarınıza Ulaşan Kalite</p>
+                                <p class="slide-description">
+                                    Rize'nin bereketli topraklarında doğal yöntemlerle yetiştirdiğimiz çaylarımız,
+                                    modern işleme teknikleriyle size ulaşıyor.
+                                </p>
+                                <div class="slide-buttons">
+                                    <a href="products.html?category=caylar" class="btn btn-primary">Çaylarımız</a>
+                                    <a href="#contact" class="btn btn-secondary">İletişim</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carousel Navigation -->
+            <div class="carousel-nav">
+                <button class="carousel-prev" aria-label="Önceki Slide">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-next" aria-label="Sonraki Slide">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0" aria-label="Slide 1"></button>
+                <button class="indicator" data-slide="1" aria-label="Slide 2"></button>
+                <button class="indicator" data-slide="2" aria-label="Slide 3"></button>
+                <button class="indicator" data-slide="3" aria-label="Slide 4"></button>
+            </div>
+
+            <!-- Carousel Progress Bar -->
+            <div class="carousel-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İş Birliklerimiz Section -->
+    <section id="partnerships" class="partnerships section">
+        <div class="container">
+            <div class="section-header">
+                <h2>İş Birliklerimiz</h2>
+                <p>Güvenilir markalarla birlikte çalışıyoruz</p>
+            </div>
+            
+            <!-- Partnerships Carousel -->
+            <div class="partnerships-carousel">
+                <div class="partnerships-carousel-wrapper">
+                    <div class="partnerships-carousel-track" id="partnershipsTrack">
+                        <!-- Yeni marka listesi -->
+                        <div class="partner-item" data-brand="harfece-bakliyat" data-category="own" data-brand-name="Harfece Bakliyat">
+                            <div class="partner-logo">
+                                <img src="assets/images/harfece.png" alt="Harfece Baklıyat">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="kalbak-bakliyat" data-category="own" data-brand-name="Kalbak Bakliyat">
+                            <div class="partner-logo">
+                                <img src="assets/images/kalbak.png" alt="Kalbak Baklıyat">
+                            </div>
+                        </div>
+
+                        <div class="partner-item" data-brand="mert-kup-seker" data-category="partner" data-brand-name="Mert Küp Şeker">
+                            <div class="partner-logo">
+                                <img src="./assets/images/mertküpseker.jpg" alt="Mert Küp Şeker" style="max-width: 90px; max-height: 50px; object-fit: contain; display: block;">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="turna-yag" data-category="partner" data-brand-name="Turna Yağ">
+                            <div class="partner-logo">
+                                <img src="assets/images/turna-logo.png" alt="Turna Yağ">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="cagdas-bulgur" data-category="partner" data-brand-name="Çağdaş Bulgur">
+                            <div class="partner-logo">
+                                <img src="assets/images/cagdas-bulgur.png" alt="Çağdaş Bulgur" >
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="arbel-bulgur" data-category="partner" data-brand-name="Arbel Bulgur">
+                            <div class="partner-logo">
+                                <img src="assets/images/arbel-bulgur-bakliyat.png" alt="Arbel Bulgur & Baklıyat">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="turkiye-seker" data-category="partner" data-brand-name="Türkiye Şeker Fab">
+                            <div class="partner-logo">
+                                <img src="assets/images/turkseker-logo.webp" alt="Türkiye Şeker Fabrikaları">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="er-mis-salca" data-category="partner" data-brand-name="Er Mis Salça">
+                            <div class="partner-logo">
+                                <img src="assets/images/ermis_logo.jpg" alt="Ermis Salça">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="ovella-makarna" data-category="partner" data-brand-name="Ovella Makarna">
+                            <div class="partner-logo">
+                                <img src="assets/images/ovella.png" alt="Ovella Makarna">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="beypazari" data-category="partner" data-brand-name="Beypazarı">
+                            <div class="partner-logo">
+                                <img src="assets/images/beypazarı.png" alt="Beypazarı Maden Suyu">
+                             </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="caykur" data-category="partner" data-brand-name="Çaykur">
+                            <div class="partner-logo">
+                                <img src="assets/images/caykur-logo.png" alt="Çaykur">
+                            </div>
+                        </div>
+                       
+                        
+                        <!-- Duplicate items for seamless loop -->
+                        <div class="partner-item" data-brand="harfece-bakliyat" data-category="own" data-brand-name="Harfece Bakliyat">
+                            <div class="partner-logo">
+                                <img src="assets/images/harfece.png" alt="Harfece Baklıyat">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="kalbak-bakliyat" data-category="own" data-brand-name="Kalbak Bakliyat">
+                            <div class="partner-logo">
+                                <img src="assets/images/kalbak.png" alt="Kalbak Baklıyat">
+                            </div>
+                        </div>
+
+                        <div class="partner-item" data-brand="mert-kup-seker" data-category="partner" data-brand-name="Mert Küp Şeker">
+                            <div class="partner-logo">
+                                <img src="./assets/images/mgs-logo.jpg" alt="Mert Küp Şeker" style="max-width: 90px; max-height: 50px; object-fit: contain; display: block;">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="turna-yag" data-category="partner" data-brand-name="Turna Yağ">
+                            <div class="partner-logo">
+                                <img src="assets/images/turna-logo.png" alt="Turna Yağ">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="cagdas-bulgur" data-category="partner" data-brand-name="Çağdaş Bulgur">
+                            <div class="partner-logo">
+                                <img src="assets/images/cagdas-bulgur.png" alt="Çağdaş Bulgur" >
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="arbel-bulgur" data-category="partner" data-brand-name="Arbel Bulgur">
+                            <div class="partner-logo">
+                                <img src="assets/images/arbel-bulgur-bakliyat.png" alt="Arbel Bulgur & Baklıyat">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="turkiye-seker" data-category="partner" data-brand-name="Türkiye Şeker Fab">
+                            <div class="partner-logo">
+                                <img src="assets/images/turkseker-logo.webp" alt="Türkiye Şeker Fabrikaları">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="er-mis-salca" data-category="partner" data-brand-name="Er Mis Salça">
+                            <div class="partner-logo">
+                                <img src="assets/images/ermis_logo.jpg" alt="Ermis Salça">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="ovella-makarna" data-category="partner" data-brand-name="Ovella Makarna">
+                            <div class="partner-logo">
+                                <img src="assets/images/ova-makarna.png" alt="Ovella Makarna">
+                            </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="beypazari" data-category="partner" data-brand-name="Beypazarı">
+                            <div class="partner-logo">
+                                <img src="assets/images/beypazarı.png" alt="Beypazarı Maden Suyu">
+                             </div>
+                        </div>
+                        
+                        <div class="partner-item" data-brand="caykur" data-category="partner" data-brand-name="Çaykur">
+                            <div class="partner-logo">
+                                <img src="assets/images/caykur-logo.png" alt="Çaykur">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile swipe enabled - no navigation buttons needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Hakkımızda</h2>
+                <p>Hakgida olarak misyonumuz ve vizyonumuz</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Bizim Hikayemiz</h3>
+                    <p>
+                        Hakgida, 2010 yılında kurulan ve gıda sektöründe teknoloji ile kaliteyi buluşturan öncü bir firmadır. 
+                        İnovatif yaklaşımımız ve geleneksel lezzetlerimizle müşteri memnuniyetini ön planda tutmaktayız.
+                    </p>
+                    <p>
+                        Modern üretim tesislerimizde çay üretiminden baharat ve baklagil ürünlerine kadar 
+                        geniş bir yelpazede kaliteli ürünler sunarak sofralarınıza değer katıyoruz.
+                    </p>
+                    <div class="about-buttons">
+                        <a href="about.html" class="btn btn-primary" target="_blank">Devamını Oku</a>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="assets/images/hakgida-duvar.jpeg" alt="Hakgida Üretim Duvarı" class="about-img" style="width: 300px; height: 100%; object-fit: cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+        <div class="container">
+            <div class="section-header">
+                <h2>İletişim</h2>
+                <p>Bizimle iletişime geçin</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>İletişim Bilgileri</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Adres</h4>
+                            <p>Kırıkhan/Hatay - Cumhuriyet, Çevreyolu Cd. No:63, 31440</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefon</h4>
+                            <p>+90 533 290 79 94</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>E-posta</h4>
+                            <p>info@hakgida.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Pazartesi - Cumartesi: 08:00 - 17:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="whatsapp-contact">
+                    <h3>WhatsApp ile İletişim</h3>
+                    <div class="whatsapp-info">
+                        <div class="whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="whatsapp-details">
+                            <h4>Hızlı İletişim</h4>
+                            <p>WhatsApp üzerinden bize ulaşın, sorularınızı hızla yanıtlayalım</p>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <div class="whatsapp-buttons">
+                        <a href="https://wa.me/905554443322?text=Merhaba%20Hakgida%2C%20ürünleriniz%20hakkında%20bilgi%20almak%20istiyorum." 
+                           class="btn btn-whatsapp" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp'ta Sohbet Et
+                        </a>
+                        <a href="tel:+905554443322" class="btn btn-phone">
+                            <i class="fas fa-phone"></i>
+                            Hemen Ara
+                        </a>
+                    </div>
+                    
+                    <div class="whatsapp-qr">
+                        <div class="qr-code">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://wa.me/905554443322?text=Merhaba%20Hakgida%2C%20ürünleriniz%20hakkında%20bilgi%20almak%20istiyorum." 
+                                 alt="WhatsApp QR Kodu" 
+                                 class="qr-image">
+                        </div>
+                        <p>Telefonunuzla QR kodu tarayarak WhatsApp'ta bize ulaşabilirsiniz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section company-info">
+                    <div class="footer-logo"><img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="footer-logo-img"></div>
+                    <p>Modern teknoloji ve geleneksel lezzetleri bir araya getirerek en kaliteli ürünleri sunuyoruz.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ürün Kategorileri</h3>
+                    <ul>
+                        <li><a href="products.html?category=caylar">Çaylar</a></li>
+                        <li><a href="products.html?category=bakliyat">Bakliyat</a></li>
+                        <li><a href="products.html?category=bulgur">Bulgur</a></li>
+                        <li><a href="products.html?category=baharat">Baharat</a></li>
+                        <li><a href="products.html?category=salca">Salça</a></li>
+                        <li><a href="products.html?category=makarna">Makarna</a></li>
+                        <li><a href="products.html?category=seker">Şeker</a></li>
+                        <li><a href="products.html?category=yag">Yağ</a></li>
+                        <li><a href="products.html?category=icecek">İçecek</a></li>
+                        <li><a href="products.html?category=organik">Organik</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kurumsal</h3>
+                    <ul>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                        <li><a href="index.html#contact">İletişim</a></li>
+                        <li><a href="products.html">Ürünlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Kırıkhan/Hatay</p>
+                    <p><i class="fas fa-phone"></i> +90 533 290 79 94</p>
+                    <p><i class="fas fa-envelope"></i> info@hakgida.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hakgida. Tüm hakları saklıdır. | <a href="gizlilik-politikasi.html">Gizlilik Politikası</a> | <a href="kalite-politikamiz.html">Kalite Politikası</a> | <a href="kvkk-metni.html">KVKK Metni</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module" src="./assets/js/main.js"></script>
+</body>
+</html> 

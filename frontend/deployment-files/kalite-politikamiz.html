@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalite Politikamız - Hakgida</title>
+    <meta name="description" content="Hakgida kalite politikası, vizyon ve misyonumuz, politikalarımız ve taahhütlerimiz">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Kalite Politikamız sayfası için orantılı boşluklar */
+        .about-detail.section { padding: 40px 0; }
+        .about-detail .about-content { display: block; }
+        /* Tüm içerik bloklarını aynı hizaya getir ve sabit genişlikte topla */
+        .about-detail .about-text {
+            max-width: 980px;
+            margin: 0 auto; /* ortala ve sol başlangıçlarını eşitle */
+        }
+        /* Başlıkları (Kapsamımız, Vizyonumuz & Misyonumuz, Politakamız, Taahhütlerimiz) aynı tipografiyle sabitle */
+        .about-detail .about-text h2 {
+            margin: 24px 0 12px;
+            line-height: 1.25;
+            font-size: 28px;
+            font-weight: 700;
+            color: #f59e0b; /* diğer başlıklarla uyumlu turuncu */
+            padding: 0;
+        }
+        .about-detail .about-text p { margin: 0 0 12px; line-height: 1.75; color: #374151; }
+        /* Liste maddelerini paragraflarla aynı başlangıç hizasına getir */
+        .about-detail .about-text ul { margin: 0 0 16px 0; padding: 0; list-style: none; }
+        .about-detail .about-text li { margin: 0 0 8px; position: relative; padding-left: 18px; }
+        .about-detail .about-text li::before {
+            content: '■';
+            position: absolute; left: 0; top: 0.2em;
+            font-size: 0.7em; color: #f59e0b; line-height: 1;
+        }
+        .about-detail .about-text > *:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+    <!-- Navigation (About sayfasıyla aynı yapı) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="logo">
+                    <div class="logo-text-container">
+                        <div class="logo-text">HAK</div>
+                        <div class="logo-text">GIDA</div>
+                    </div>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                <li class="nav-item"><a href="products.html" class="nav-link">Ürünler</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">Hakkımızda</a></li>
+                <li class="nav-item"><a href="index.html#contact" class="nav-link">İletişim</a></li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header (About ile aynı bileşen) -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Kalite Politikamız</h1>
+            <p>Kalite standartlarımız, politikalarımız ve taahhütlerimiz</p>
+        </div>
+    </section>
+
+    <!-- Content (About sayfasındaki metin yapısı ile uyumlu) -->
+    <section class="about-detail section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Kapsamımız</h2>
+                    <p>Entegre Yönetim Sistemleri olarak; <strong>BRC Food, FSSC 22000, ISO 9001</strong> Kalite Yönetim Sistemi, <strong>ISO 22000</strong> Gıda Güvenliği Yönetim Sistemi, <strong>ISO 14001</strong> Çevre Yönetim Sistemi ve İş Sağlığı ve Güvenliği uygulamalarını kapsar. Sistem; üretimden sevkiyata, depolama ve dağıtıma kadar tüm süreçlerdeki ticari ürünleri kapsar.</p>
+
+                    <h2>Vizyonumuz &amp; Misyonumuz</h2>
+                    <p>Markalarımızı sürekli gelişim gösteren, yenilikçi ve katılımcı bir anlayışla büyütmeyi hedefliyoruz. Müşteri memnuniyetini temel hedef kabul ediyor; kalite ve gıda güvenliğini artırmak için bilimi ve teknolojideki gelişmeleri yakından takip ediyoruz.</p>
+
+                    <h2>Politikamız</h2>
+                    <ul>
+                        <li>Ürün güvenilirliğini sürekli izler, lezzet ve kalite dengesini koruruz.</li>
+                        <li>Potansiyel tehlikeleri tespit eder, kritik kontrol noktalarını etkin biçimde yönetiriz.</li>
+                        <li>Yasal ve müşteri şartlarını eksiksiz karşılamayı taahhüt ederiz.</li>
+                        <li>Bilimsel/teknolojik gelişmeleri izler, yenilikleri süreçlerimize dahil ederiz.</li>
+                        <li>Sürdürülebilir yönetim anlayışıyla kaliteyi kurum kültürü haline getiririz.</li>
+                    </ul>
+
+                    <h2>Taahhütlerimiz</h2>
+                    <ul>
+                        <li>Yasal şartlara ve müşteri beklentilerine tam uyum.</li>
+                        <li>Ürün güvenliği risklerini azaltmaya yönelik proaktif yaklaşım ve sürekli iyileştirme.</li>
+                        <li>Çalışan sağlığı ve güvenliği için gerekli tüm tedbirlerin alınması.</li>
+                        <li>Kaliteli hammadde temini, izlenebilirlik ve şeffaf tedarik zinciri yönetimi.</li>
+                        <li>Doğaya ve topluma saygılı üretim; kaynakların verimli kullanımı.</li>
+                        <li>Ulusal/uluslararası standartlarla tam uyum ve bağımsız denetimlerle doğrulama.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (About ile aynı yapı) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section company-info">
+                    <div class="footer-logo"><img src="assets/images/hakgida-logo-isimsiz.png" alt="Hakgida Logo" class="footer-logo-img"></div>
+                    <p>Modern teknoloji ve geleneksel lezzetleri bir araya getirerek en kaliteli ürünleri sunuyoruz.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Ürün Kategorileri</h3>
+                    <ul>
+                        <li><a href="products.html?category=caylar">Çaylar</a></li>
+                        <li><a href="products.html?category=bakliyat">Bakliyat</a></li>
+                        <li><a href="products.html?category=bulgur">Bulgur</a></li>
+                        <li><a href="products.html?category=baharat">Baharat</a></li>
+                        <li><a href="products.html?category=salca">Salça</a></li>
+                        <li><a href="products.html?category=makarna">Makarna</a></li>
+                        <li><a href="products.html?category=seker">Şeker</a></li>
+                        <li><a href="products.html?category=yag">Yağ</a></li>
+                        <li><a href="products.html?category=icecek">İçecek</a></li>
+                        <li><a href="products.html?category=organik">Organik</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kurumsal</h3>
+                    <ul>
+                        <li><a href="about.html">Hakkımızda</a></li>
+                        <li><a href="index.html#contact">İletişim</a></li>
+                        <li><a href="products.html">Ürünlerimiz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Kırıkhan/Hatay</p>
+                    <p><i class="fas fa-phone"></i> +90 533 290 79 94</p>
+                    <p><i class="fas fa-envelope"></i> info@hakgida.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Hakgida. Tüm hakları saklıdır. | <a href="gizlilik-politikasi.html">Gizlilik Politikası</a> | <a href="kalite-politikamiz.html">Kalite Politikası</a> | <a href="kvkk-metni.html">KVKK Metni</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts (About sayfasıyla aynı) -->
+    <script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>
