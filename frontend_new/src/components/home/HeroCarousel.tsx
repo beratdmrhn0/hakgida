@@ -20,10 +20,10 @@ const slides = [
     ],
   },
   {
-    image: '/assets/images/harfece-urunler-mutfak.jpg',
-    title: 'Harfece Bakliyat - Sofralarınızın Vazgeçilmezi',
-    subtitle: 'Doğal, Sağlıklı, Lezzetli',
-    description: 'Kendi üretimimiz Harfece bakliyat ürünleri ile ailecek sağlıklı beslenin. Pirinç, mercimek, nohut, bulgur ve daha fazlası...',
+    image: '/assets/images/harfece_urunler.png',
+    title: 'Harfece Bakliyat - Doğanın En Taze Ürünleri',
+    subtitle: 'Tarlanın Bereketi, Sofranızın Güvencesi',
+    description: 'Kendi üretimimiz Harfece bakliyat ürünleri ile sağlıklı beslenin. Pirinç, mercimek, nohut, bulgur ve daha fazlası...',
     buttons: [
       { text: 'Harfece Ürünleri', link: '/products?brand=Harfece', primary: true },
       { text: 'Tüm Ürünler', link: '/products', primary: false },
