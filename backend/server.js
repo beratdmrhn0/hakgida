@@ -1,10 +1,13 @@
-// Hakgida Backend Server - Cloud Deployment Ready
+// Hakgida Backend Server - Cloud Deployment Ready with Enhanced Security
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const { sequelize } = require('./config/database');
+
+// Import security middleware
+const { apiRateLimit, securityHeaders } = require('./middleware/security');
 
 // Import routes
 const productRoutes = require('./api/routes/products');
@@ -44,16 +47,36 @@ async function seedCategories() {
 // Initialize Express app
 const app = express();
 
-// Trust proxy for Railway
+// Trust proxy for Railway and security
 app.set('trust proxy', 1);
 
-// Security middleware
+// Enhanced Security middleware with Helmet
 app.use(helmet({
     crossOriginEmbedderPolicy: false,
-    contentSecurityPolicy: false,
-    crossOriginResourcePolicy: false,
-    crossOriginOpenerPolicy: false
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'"],
+            imgSrc: ["'self'", "data:", "https:"],
+        }
+    },
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    hsts: {
+        maxAge: 31536000, // 1 year
+        includeSubDomains: true,
+        preload: true
+    },
+    frameguard: {
+        action: 'deny'
+    },
+    noSniff: true,
+    xssFilter: true
 }));
+
+// Additional custom security headers
+app.use(securityHeaders);
 
 // Compression middleware
 app.use(compression());
@@ -93,9 +116,12 @@ app.use(cors({
     credentials: true
 }));
 
-// Body parsing middleware
+// Body parsing middleware with size limits for security
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Apply general API rate limiting to all routes
+app.use('/api/', apiRateLimit);
 
 // Static file serving - uploads klasörü with CORS
 app.use('/uploads', (req, res, next) => {
@@ -105,9 +131,11 @@ app.use('/uploads', (req, res, next) => {
     next();
 }, express.static('uploads'));
 
-// Request logging middleware
+// Enhanced request logging middleware with security info
 app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+    const ip = req.ip || req.connection.remoteAddress;
+    const userAgent = req.headers['user-agent'] || 'Unknown';
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} - IP: ${ip} - UA: ${userAgent.substring(0, 50)}`);
     next();
 });
 

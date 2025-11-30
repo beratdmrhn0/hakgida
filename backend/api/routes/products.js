@@ -1,8 +1,9 @@
-// Products API Routes
+// Products API Routes - Protected with Authentication
 const express = require('express');
 const router = express.Router();
 const Product = require('../../models/Product');
 const { Op } = require('sequelize');
+const { verifyToken, verifyAdmin } = require('../../middleware/security');
 
 // GET /api/products - Get all products
 router.get('/', async (req, res) => {
@@ -111,8 +112,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// POST /api/products - Create new product
-router.post('/', async (req, res) => {
+// POST /api/products - Create new product (Admin only)
+router.post('/', verifyToken, verifyAdmin, async (req, res) => {
     try {
         const productData = req.body;
         
@@ -166,8 +167,8 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT /api/products/:id - Update product
-router.put('/:id', async (req, res) => {
+// PUT /api/products/:id - Update product (Admin only)
+router.put('/:id', verifyToken, verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const updateData = req.body;
@@ -219,8 +220,8 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE /api/products/:id - Delete product
-router.delete('/:id', async (req, res) => {
+// DELETE /api/products/:id - Delete product (Admin only)
+router.delete('/:id', verifyToken, verifyAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         
