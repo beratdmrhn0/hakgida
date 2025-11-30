@@ -20,13 +20,13 @@ const slides = [
     ],
   },
   {
-    image: '/assets/images/fabrika-resimleri/resim5.webp',
-    title: 'Çay, Bakliyat, Makarna ve Daha Fazlası',
-    subtitle: 'Geniş Ürün Yelpazesi',
-    description: 'Seçkin markalarla çalışıyor, kendi üretimimiz Harfece ve Kalbak bakliyat ürünleri ile hizmet veriyoruz.',
+    image: '/assets/images/harfece-urunler-mutfak.jpg',
+    title: 'Harfece Bakliyat - Sofralarınızın Vazgeçilmezi',
+    subtitle: 'Doğal, Sağlıklı, Lezzetli',
+    description: 'Kendi üretimimiz Harfece bakliyat ürünleri ile ailecek sağlıklı beslenin. Pirinç, mercimek, nohut, bulgur ve daha fazlası...',
     buttons: [
-      { text: 'Ürünleri Keşfet', link: '/products', primary: true },
-      { text: 'İletişim', link: '/#contact', primary: false },
+      { text: 'Harfece Ürünleri', link: '/products?brand=Harfece', primary: true },
+      { text: 'Tüm Ürünler', link: '/products', primary: false },
     ],
   },
   {
