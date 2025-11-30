@@ -101,18 +101,13 @@ const HeroCarousel = () => {
           }`}
         >
           {/* Background Image */}
-          <div className={`absolute inset-0 ${index === 2 ? 'bg-gradient-to-b from-amber-50 to-blue-50' : ''}`}>
+          <div className="absolute inset-0">
             {/* İlk slide için overlay yok, diğerleri için var */}
-            {index !== 0 && index !== 2 && <div className="absolute inset-0 bg-black/40 z-10"></div>}
-            {index === 2 && <div className="absolute inset-0 bg-black/20 z-10"></div>}
+            {index !== 0 && <div className="absolute inset-0 bg-black/40 z-10"></div>}
             <img
               src={slide.image}
               alt={slide.title}
-              className={`w-full h-full ${
-                index === 2 
-                  ? 'object-contain' 
-                  : 'object-cover'
-              }`}
+              className="w-full h-full object-cover"
             />
           </div>
 
